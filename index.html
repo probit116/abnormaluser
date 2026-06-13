@@ -949,6 +949,49 @@
     .modal-panel.modal-panel--config{
       width:min(760px, calc(100vw - 32px));
     }
+    .modal-overlay.modal-overlay--with-spec{
+      gap:18px;
+      align-items:center;
+      justify-content:center;
+    }
+    .modal-overlay.modal-overlay--with-spec .modal-panel{
+      max-height:calc(100vh - 40px);
+      overflow:auto;
+    }
+    .modal-spec-panel{
+      width:min(420px, calc(100vw - 32px));
+      max-height:calc(100vh - 40px);
+      border-radius:24px;
+      border:1px solid rgba(86,167,255,.18);
+      background:linear-gradient(180deg, rgba(6,16,30,.98), rgba(4,12,24,.98));
+      box-shadow:0 30px 80px rgba(0,0,0,.4);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .modal-spec-panel[hidden]{
+      display:none !important;
+    }
+    .modal-spec-panel__head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px 18px 12px;
+      border-bottom:1px solid rgba(148,163,184,.12);
+    }
+    .modal-spec-panel__head strong{
+      font-size:16px;
+      color:#f4f8ff;
+    }
+    .modal-spec-panel__body{
+      overflow:auto;
+      padding:14px 14px 18px;
+    }
+    .modal-spec-panel__body .spec-card{
+      margin-bottom:14px;
+    }
     #rule-config-modal-body{
       display:flex;
       justify-content:center;
@@ -1305,6 +1348,33 @@
     .spec-card ol{margin:0; padding-left:20px; font-size:12px; color:#9fb3c8; line-height:1.8}
     .spec-card li{margin-bottom:6px}
     .spec-page{display:none}
+    .spec-context-trigger{
+      min-width:auto;
+      padding:0 14px;
+      height:36px;
+      border-radius:12px;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .modal-head-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex:0 0 auto;
+    }
+    .inline-spec-entry{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin:-2px 0 16px;
+    }
+    .inline-spec-entry h2{
+      margin:0;
+    }
+    .inline-spec-entry .spec-context-trigger{
+      height:34px;
+    }
     .spec-page.active{display:block}
     .inline-entry-modal{
       position:fixed;
@@ -1363,6 +1433,18 @@
       .modal-kv{grid-template-columns:1fr}
       .spec-sidebar{width:100vw}
       .spec-sidebar.collapsed{transform:translateX(100%)}
+      .modal-overlay.modal-overlay--with-spec{
+        flex-direction:column;
+        align-items:stretch;
+      }
+      .modal-overlay.modal-overlay--with-spec .modal-panel,
+      .modal-spec-panel{
+        width:min(100%, calc(100vw - 32px));
+      }
+      .modal-spec-panel{
+        max-height:38vh;
+      }
+      .nav-parent{grid-template-columns:minmax(0,1fr) 40px}
       .nav-parent{grid-template-columns:minmax(0,1fr) 40px}
       .nav-group-toggle{
         width:40px;
@@ -6369,42 +6451,6 @@
   <aside class="spec-sidebar" id="spec-sidebar">
     <h3>口径定义</h3>
     <div id="spec-current-structure-slot"></div>
-    <div class="spec-card">
-      <strong>数字显示与输入规则</strong>
-      <em>运营说明</em>
-      <ol>
-        <li>弹窗整数输入：`用户数`、`次数`、`条数`、`人数`、`时长阈值`、`分钟/小时/天/秒/MS`、`最低历史仓位数` 等，统一只允许输入 `0-9` 纯数字整数，不允许负数、小数、空格、千分位符号。</li>
-        <li>弹窗金额输入：`充值金额`、`提现金额`、`盈利金额`、`最小总金额`、`成交金额` 等，统一最多允许 `2` 位小数；输入时不带币种、不带逗号，示例：`1000`、`1000.50`。</li>
-        <li>弹窗百分比输入：`胜率`、`盈利率`、`交易覆盖率`、`滑点百分比` 等，统一输入 `0-100` 的纯数字整数，不输入 `%`；页面显示时统一补足为 `2` 位小数并追加 `%`，示例：输入 `85`，页面显示 `85.00%`。</li>
-        <li>页面计数显示：`监控用户总数`、`新增命中`、`处理次数`、`累计处理数量`、`配置数`、`关联用户数` 等，统一显示整数，不补小数位。</li>
-        <li>页面金额显示：`价格`、`充值`、`提现`、`盈利`、`成交金额` 等，统一显示 `2` 位小数；金额大于等于 `1000` 时增加千分位分隔，币种放在数字后方，如 `1,234.50 USDT`。</li>
-        <li>页面时间与时长显示：时间戳统一显示为 `YYYY-MM-DD HH:mm:ss`；时长统一显示为 `整数 + 单位`，如 `5分钟`、`12小时`、`800MS`；杠杆统一显示为 `整数 + x`，如 `5x`、`20x`。</li>
-        <li>弹窗数字输入框验收：凡为数字类输入框，右侧口径定义必须能明确判断为 `整数` 或 `最多2位小数`，不能只写“请输入数字”。</li>
-      </ol>
-      <em>注意事项</em>
-      <ol>
-        <li>所有输入框以后端接口校验和最终返回结果为准，前端仅负责录入限制、提示文案和页面展示。</li>
-        <li>数值输入项默认按非负数校验；空值、非法字符、负数均应拦截或提示。</li>
-        <li>范围输入项需满足左值小于或等于右值，单位必须与页面展示单位一致，如 `MS`、`%`、`USDT`。</li>
-        <li>批量UID输入时应先按 `/` 分隔，再去除首尾空格，空项忽略，重复UID建议去重处理。</li>
-        <li>订单号、用户UID、会员账号、姓名等检索输入框若无特殊说明，允许为空；为空时表示不按该条件过滤。</li>
-        <li>所有 `异常处理方式` 下拉项统一为 `请选择`、`仅标记`、`禁止登录`、`禁止提现`、`禁止现货交易`、`禁止合约开仓`、`提现人工审核`、`需要人脸认证KYC`，页面与口径需保持一致。</li>
-      </ol>
-    </div>
-    <div class="spec-card">
-      <strong>列表换行与显示规则</strong>
-      <em>开发测试验收</em>
-      <ol>
-        <li>短字段：`类型`、`状态`、`币对`、`链类型`、`用户数`、`次数`、`时间范围` 等，单元格统一单行显示；超过 `12` 个中文字符或 `24` 个英文/数字字符后不换行，直接省略。</li>
-        <li>中字段：`邮箱/账号`、`设备ID`、`密码摘要`、`提币地址摘要`、`交易对手UID集合摘要` 等，超过 `24` 个中文字符或 `48` 个英文/数字字符时换到第 `2` 行，最多显示 `2` 行。</li>
-        <li>长字段：`原因`、`备注`、`命中证据说明`、`关联用户UID`、`触发原因` 等，超过 `24` 个中文字符或 `48` 个英文/数字字符时换行，最多显示 `3` 行；第 `4` 行起省略。</li>
-        <li>操作列：每行最多显示 `3` 个操作按钮，第 `4` 个按钮起换到下一行。</li>
-        <li>风险标签列：每行最多显示 `2` 个标签，第 `3` 个标签起换到下一行。</li>
-        <li>开发与测试验收统一按 `字符数 + 最大行数` 判断是否合规，不按示例文案长度、浏览器缩放比例或人工主观感觉判断。</li>
-      </ol>
-    </div>
-    
-
     <div class="spec-page" data-spec-page="modal-manual-adl">
       <div class="spec-card">
         <strong>手动ADL弹窗口径定义</strong>
@@ -6416,12 +6462,12 @@
         <em>字段说明</em>
         <ol>
           <li>基础标的参数：固定展示、不可编辑，包含 `交易对`、`合约ID`、`操作类型`；当前原型示例值分别为 `BTC/USDT`、`10001`、`手动ADL减仓`。</li>
-          <li>破产价：手动输入字段；`多仓` 不可高于当前价，`空仓` 不可低于当前价；小数位按平台配置的价格小数位执行，并按截取口径处理。</li>
-          <li>当前价：只读字段，由平台接口返回；小数位按平台配置执行，并按截取口径处理。</li>
-          <li>持仓数量：只读字段，由平台接口返回；小数位按平台配置执行，并按截取口径处理。</li>
-          <li>持仓方向：只读字段，取值为 `多仓` 或 `空仓`，用于决定破产价校验和盈亏公式。</li>
-          <li>持仓均价：只读字段，由平台接口返回；小数位按平台配置执行，并按截取口径处理。</li>
-          <li>平仓数量：手动输入字段，不可大于用户当前持仓数量；小数位按平台配置执行，并按截取口径处理，不可超过持仓数量上限。</li>
+          <li>破产价：手动输入字段；`多仓` 不可高于当前价，`空仓` 不可低于当前价；小数点位数跟随平台后端返回，页面截取处理。</li>
+          <li>当前价：只读输入框，由后台返回；小数点位数跟随平台后端返回，页面截取处理。</li>
+          <li>持仓数量：只读输入框，由后台返回；小数点位数跟随平台后端返回，页面截取处理。</li>
+          <li>持仓方向：只读输入框，由后台返回，取值为 `多仓` 或 `空仓`，用于决定破产价校验和盈亏公式。</li>
+          <li>持仓均价：只读输入框，由后台返回；小数点位数跟随平台后端返回，页面截取处理。</li>
+          <li>平仓数量：手动输入字段，不可大于用户当前持仓数量；小数点位数跟随平台后端返回，页面截取处理，不可超过持仓数量上限。</li>
           <li>平仓后用户盈亏显示：只读字段，按当前输入实时计算；`多仓 =（破产价 - 持仓均价）× 平仓数量`，`空仓 =（持仓均价 - 破产价）× 平仓数量`。</li>
           <li>谷歌验证码：必填字段，用于确认本次手动ADL减仓操作。</li>
         </ol>
@@ -6446,7 +6492,7 @@
           <li>自动加入规则模式：单选字段，取值为 `继承可疑用户类型` 或 `额外增加触发类型`；黑名单用户点击确认时，不允许停留在与可疑用户完全相同的继承结果。</li>
           <li>继承的可疑用户触发类型：多选展示字段，用于显示当前可疑用户已配置的自动加入类型；在继承模式下展示，在额外模式下仅作为对比基准。</li>
           <li>额外增加的触发类型：多选输入字段，仅在 `额外增加触发类型` 模式显示；勾选项为黑名单相对可疑用户新增的触发来源。</li>
-          <li>比可疑用户类型增加触发类型数：只读整数，按当前额外勾选项实时统计；黑名单用户确认保存时该值必须 `大于等于 1`。</li>
+          <li>比可疑用户类型增加触发类型数：只读输入框，展示当前额外勾选项实时统计结果；黑名单用户确认保存时该值必须 `大于等于 1`。</li>
           <li>谷歌验证码：必填字段；当前原型按非空校验，未填写时不允许确认保存。</li>
         </ol>
         <em>操作说明</em>
@@ -6467,8 +6513,8 @@
         </ol>
         <em>字段说明</em>
         <ol>
-          <li>限价延迟下单配置：包含 `最小值(MS)`、`最大值(MS)`、`开启/关闭`；最小值与最大值均为纯数字整数，单位为 `MS`，且必须满足 `最小值 小于等于 最大值`。</li>
-          <li>市价滑点百分比配置：包含 `最小值(%)`、`最大值(%)`、`开启/关闭`；输入为 `0-100` 的纯数字整数，不输入 `%`，且必须满足 `最小值 小于等于 最大值`。</li>
+          <li>限价延迟下单配置：包含 `最小值(MS)`、`最大值(MS)`、`开启/关闭`；最小值与最大值均为纯数字整数，单位为 `MS`，仅展示整数，无小数点，且必须满足 `最小值 小于等于 最大值`。</li>
+          <li>市价滑点百分比配置：包含 `最小值(%)`、`最大值(%)`、`开启/关闭`；按百分比口径录入与展示，页面展示默认保留两位小数点，且必须满足 `最小值 小于等于 最大值`。</li>
           <li>市价滑点结算公式：规则开启时，`买入结算价 = 买入均价 × (1 + 市价滑点百分比)`，`卖出结算价 = 卖出均价 × (1 - 市价滑点百分比)`。</li>
           <li>谷歌验证码：必填字段；当前原型按非空校验，未填写时不允许确认保存。</li>
         </ol>
@@ -6490,8 +6536,8 @@
         </ol>
         <em>字段说明</em>
         <ol>
-          <li>来源页面：只读字段，显示当前点击来源页面名称，如 `异常登录监控`、`同秒开仓监控`。</li>
-          <li>当前状态：只读字段，显示当前监控页生效状态，取值为 `开启` 或 `关闭`。</li>
+          <li>来源页面：只读输入框，显示当前点击来源页面名称，如 `异常登录监控`、`同秒开仓监控`。</li>
+          <li>当前状态：只读输入框，显示当前监控页生效状态，取值为 `开启` 或 `关闭`。</li>
           <li>目标状态：单选字段，取值仅为 `开启` 或 `关闭`；点击任一状态按钮后，隐藏值同步更新为当前选中项。</li>
         </ol>
         <em>操作说明</em>
@@ -6512,9 +6558,9 @@
         </ol>
         <em>字段说明</em>
         <ol>
-          <li>来源页面：只读字段，显示当前弹窗来源页面。</li>
-          <li>当前用户UID：默认带出当前操作用户UID。</li>
-          <li>关联用户展示：按来源页面动态显示，如 `关联同秒开仓用户`、`关联同提币地址用户`、`关联交易对手用户`；该字段为只读展示。</li>
+          <li>来源页面：只读输入框，显示当前弹窗来源页面。</li>
+          <li>当前用户UID：只读输入框，默认带出当前操作用户UID。</li>
+          <li>关联用户展示：按来源页面动态显示，如 `关联同秒开仓用户`、`关联同提币地址用户`、`关联交易对手用户`；该字段为只读输入框展示。</li>
           <li>是否关联用户：单选字段，取值为 `是/否`；选择 `是` 时，处理对象从当前用户切换为关联用户集合。</li>
           <li>风控操作：多选字段；确认前至少勾选 `1` 项，否则不允许保存。</li>
           <li>备注：选填字段，用于记录统一处理说明；当前原型不做必填校验。</li>
@@ -6534,9 +6580,9 @@
         </ol>
         <em>字段说明</em>
         <ol>
-          <li>关联同IP用户数 / 关联同设备用户数 / 关联同邮箱后缀用户数：只读整数，显示各关联维度的候选用户规模。</li>
+          <li>关联同IP用户数 / 关联同设备用户数 / 关联同邮箱后缀用户数：只读输入框，展示各关联维度的候选用户规模整数结果。</li>
           <li>是否关联用户：多选字段，取值为 `关联同IP`、`关联同设备`、`关联同邮箱后缀`；至少勾选 1 项后才会生成关联用户集合。</li>
-          <li>关联用户数：只读整数，显示当前勾选关系、过滤白名单、去重、删除后的最终用户数量。</li>
+          <li>关联用户数：只读展示输入框，显示当前勾选关系、过滤白名单、去重、删除后的最终用户数量。</li>
           <li>搜索用户UID删除：输入删除关键字后，对当前关联用户集合执行搜索删除；点击 `恢复默认UID` 后恢复到当前默认集合。</li>
           <li>关联用户UID：只读结果字段，展示最终可处理用户列表；支持手动逐个删除。</li>
           <li>风控操作：多选字段；确认前至少勾选 `1` 项，且最终关联用户集合不能为空。</li>
@@ -6556,9 +6602,9 @@
         </ol>
         <em>字段说明</em>
         <ol>
-          <li>来源页面：只读字段，固定为 `交易同用户风控`。</li>
-          <li>当前用户UID：默认带出当前交易用户UID。</li>
-          <li>关联交易对手用户：只读字段，默认带出当前记录中的全部交易对手UID集合。</li>
+          <li>来源页面：只读输入框，固定为 `交易同用户风控`。</li>
+          <li>当前用户UID：只读输入框，默认带出当前交易用户UID。</li>
+          <li>关联交易对手用户：只读输入框，默认带出当前记录中的全部交易对手UID集合。</li>
           <li>是否关联交易对手：单选字段，取值为 `是/否`；选择 `是` 时，本次处理对象切换为 `当前交易用户 + 交易对手UID集合`。</li>
           <li>风控操作：多选字段；确认前至少勾选 `1` 项，否则不允许保存。</li>
           <li>备注：选填字段，用于记录本次统一处理说明。</li>
@@ -6581,8 +6627,8 @@
         </ol>
         <em>字段说明</em>
         <ol>
-          <li>来源页面：只读字段，显示本次操作来自 `处理记录` 或 `处理记录详情`。</li>
-          <li>处理对象：只读字段，显示当前勾选对象；列表页按选中记录展示，详情页按已选详情用户范围展示。</li>
+          <li>来源页面：只读输入框，显示本次操作来自 `处理记录` 或 `处理记录详情`。</li>
+          <li>处理对象：只读输入框，显示当前勾选对象；列表页按选中记录展示，详情页按已选详情用户范围展示。</li>
           <li>开启权限项：多选字段，当前可选 `开放登录`、`开放提现`、`开放合约开仓`、`开放现货交易`、`正常提现流程`；确认前至少勾选 `1` 项。</li>
           <li>备注：必填字段，填写本次恢复权限的处理说明；当前原型按去除首尾空格后非空校验。</li>
           <li>谷歌验证码：必填字段；当前原型按非空校验，未填写时不允许确认开启。</li>
@@ -6630,8 +6676,8 @@
         </ol>
         <em>字段说明</em>
         <ol>
-          <li>来源页面：只读字段，固定为 `高频短时持仓监控`。</li>
-          <li>当前用户UID：默认带出当前命中用户UID。</li>
+          <li>来源页面：只读输入框，固定为 `高频短时持仓监控`。</li>
+          <li>当前用户UID：只读输入框，默认带出当前命中用户UID。</li>
           <li>风控操作：多选字段；确认前至少勾选 `1` 项，否则不允许保存。</li>
           <li>备注：选填字段，用于记录本次处理说明。</li>
         </ol>
@@ -6653,9 +6699,9 @@
         </ol>
         <em>字段说明</em>
         <ol>
-          <li>来源页面：只读字段，固定为 `同提币地址监控`。</li>
-          <li>当前用户UID：默认带出当前命中用户UID。</li>
-          <li>关联同提币地址用户：只读字段，默认带出当前记录中的关联用户UID集合。</li>
+          <li>来源页面：只读输入框，固定为 `同提币地址监控`。</li>
+          <li>当前用户UID：只读输入框，默认带出当前命中用户UID。</li>
+          <li>关联同提币地址用户：只读输入框，默认带出当前记录中的关联用户UID集合。</li>
           <li>是否关联同提币地址用户：单选字段，取值为 `是/否`；选择 `是` 时，本次处理对象切换为关联用户集合。</li>
           <li>风控操作：多选字段；确认前至少勾选 `1` 项，否则不允许保存。</li>
           <li>备注：选填字段，用于记录统一处理说明。</li>
@@ -6678,8 +6724,8 @@
         </ol>
         <em>字段说明</em>
         <ol>
-          <li>来源页面：只读字段，固定为 `羊毛党监控`。</li>
-          <li>当前用户UID：默认带出当前命中用户UID。</li>
+          <li>来源页面：只读输入框，固定为 `羊毛党监控`。</li>
+          <li>当前用户UID：只读输入框，默认带出当前命中用户UID。</li>
           <li>是否关联其下级：单选字段，取值为 `所有下级`、`一级以内`、`三级以内`；用于决定纳入处理的下级范围。</li>
           <li>风控操作：多选字段；确认前至少勾选 `1` 项，否则不允许保存。</li>
           <li>备注：选填字段，用于记录本次处理说明。</li>
@@ -6702,8 +6748,8 @@
         </ol>
         <em>字段说明</em>
         <ol>
-          <li>来源页面：只读字段，显示当前来源页面名称。</li>
-          <li>当前用户UID：默认带出当前命中用户UID。</li>
+          <li>来源页面：只读输入框，显示当前来源页面名称。</li>
+          <li>当前用户UID：只读输入框，默认带出当前命中用户UID。</li>
           <li>风控操作：多选字段；确认前至少勾选 `1` 项，否则不允许保存。</li>
           <li>备注：选填字段，用于记录处理说明。</li>
         </ol>
@@ -6727,7 +6773,7 @@
         <ol>
           <li>标题：只读字段，按当前来源动态显示，如 `异常登录识别规则`、`同提币地址规则配置`。</li>
           <li>配置内容：动态加载当前来源页面对应的规则表单；只展示本次点击入口对应的配置块，不混入其他页面配置。</li>
-          <li>数字类输入：按页面业务口径区分为 `纯数字整数` 或 `最多 2 位小数`；输入框前的 `大于等于 / 小于等于`、单位、是否带 `%` 必须与页面正文一致。</li>
+          <li>数字类输入：按页面业务口径区分为 `价格/数量字段按后端返回截取`、`百分比默认保留两位小数点`、`普通数字展示整数`、`分钟/MS仅展示整数无小数点`；输入框前的 `大于等于 / 小于等于`、单位、是否带 `%` 必须与页面正文一致。</li>
           <li>谷歌验证码：统一追加在规则配置底部；当前原型按非空校验，未填写时主确认按钮不允许保存。</li>
         </ol>
         <em>操作说明</em>
@@ -6896,7 +6942,7 @@
         <em>注意事项</em>
         <ol>
           <li>页面底部排序说明需与右侧口径保持一致；当前页排序字段为成交时间。</li>
-          <li>`成交价格`、`委托价格`、`数量`、`杠杆`、`成交金额` 等交易字段以后端返回为准；如无特殊说明，不在页面侧强制重算精度。</li>
+          <li>`成交价格`、`委托价格`、`数量`、`杠杆`、`成交金额` 等交易字段以页面成交明细展示结果为准；如无特殊说明，页面不额外重算精度。</li>
         </ol>
       </div>
     </div>
@@ -6919,7 +6965,7 @@
         <em>注意事项</em>
         <ol>
           <li>页面底部排序说明需与右侧口径保持一致；当前页排序字段为实际下单时间。</li>
-          <li>`下单价格`、`数量`、`杠杆`、`实际延迟毫秒数` 等字段以后端返回为准；延迟毫秒数字段按整数展示。</li>
+          <li>`下单价格`、`数量`、`杠杆`、`实际延迟毫秒数` 等字段以页面订单明细展示结果为准；延迟毫秒数字段按整数展示。</li>
         </ol>
       </div>
     </div>
@@ -6940,7 +6986,7 @@
         <em>注意事项</em>
         <ol>
           <li>字段定义与可疑用户市价历史订单页保持一致，仅数据来源范围限定为黑名单。</li>
-          <li>`成交价格`、`委托价格`、`数量`、`杠杆`、`成交金额` 等交易字段以后端返回为准；如无特殊说明，不在页面侧强制重算精度。</li>
+          <li>`成交价格`、`委托价格`、`数量`、`杠杆`、`成交金额` 等交易字段以页面成交明细展示结果为准；如无特殊说明，页面不额外重算精度。</li>
         </ol>
       </div>
     </div>
@@ -6961,7 +7007,7 @@
         <em>注意事项</em>
         <ol>
           <li>字段定义与可疑用户限价历史订单页保持一致，仅数据来源范围限定为黑名单。</li>
-          <li>`下单价格`、`数量`、`杠杆`、`实际延迟毫秒数` 等字段以后端返回为准；延迟毫秒数字段按整数展示。</li>
+          <li>`下单价格`、`数量`、`杠杆`、`实际延迟毫秒数` 等字段以页面订单明细展示结果为准；延迟毫秒数字段按整数展示。</li>
         </ol>
       </div>
     </div>
@@ -7018,7 +7064,7 @@
         </ol>
         <em>注意事项</em>
         <ol>
-          <li>`操作时间间隔阈值` 按整数分钟录入；`提现金额阈值` 按金额录入；`提现金额占总资产百分比阈值` 按百分比录入，统一以纯数字整数录入。</li>
+          <li>`操作时间间隔阈值` 按整数分钟录入，无小数点；`提现金额阈值` 按金额口径录入；`提现金额占总资产百分比阈值` 按百分比口径录入，页面展示默认保留两位小数点。</li>
           <li>监控状态关闭时，本页不再新增新的扫描结果；已存在记录仅用于历史查看。</li>
           <li>列入 `可疑用户`、`黑名单用户` 或 `IP列入白名单` 时，应同步写入备注或转入原因，保证运营可追溯。</li>
           <li>`同一用户配置` 用于对当前用户及其关联用户集合统一执行风控动作。</li>
@@ -7087,7 +7133,7 @@
         <em>注意事项</em>
         <ol>
           <li>数字类规则配置统一使用纯数字整数录入；本页 `持仓时间大于等于`、`交易频率大于等于`、`胜率大于等于` 均按整数维护。</li>
-          <li>`平台最新价`、`币安最新价`、`价差` 等价格字段以后端行情返回为准，页面不额外重算精度。</li>
+          <li>`平台最新价`、`币安最新价`、`价差` 等价格字段以页面行情展示结果为准，页面不额外重算精度。</li>
           <li>如选择 `禁止登录`、`禁止提现`、`禁止现货交易`、`禁止合约开仓`、`提现人工审核` 或 `需要人脸认证KYC`，应在实际系统中记录执行日志与人工复核结果。</li>
           <li>`高频短时持仓配置` 仅针对当前命中的单条用户记录执行风控处理，不再附带关联用户范围配置。</li>
           <li>规则配置或监控状态配置变更后，仅重新判断当前列表中的已有记录是否仍属于命中范围；此前已转为正常用户的历史记录不再回扫，新命中记录按新规则入表。</li>
@@ -7150,7 +7196,7 @@
         <em>注意事项</em>
         <ol>
           <li>进入用户白名单的用户不再进入本页羊毛党监控命中结果。</li>
-          <li>`下级交易用户领取福利数` 中的 `福利数` = `体验金` + `虚充（空投数）`，金额展示以后端返回为准。</li>
+          <li>`下级交易用户领取福利数` 中的 `福利数` = `体验金` + `虚充（空投数）`，金额展示以页面展示结果为准。</li>
           <li>命中逻辑要求同时满足两项比例条件：提现比例高于阈值，且充值比例低于阈值，单独满足其中一项不进入本页。</li>
           <li>涉及百分比阈值均按百分比录入和展示，默认保留两位小数。</li>
           <li>`此用户与其下级全部列为黑名单` 表示将当前用户及其下级账户统一转入黑名单名单，需保留批量转入日志。</li>
@@ -7295,7 +7341,7 @@
         </ol>
         <em>注意事项</em>
         <ol>
-          <li>详情页用于核对同交易对手命中的成交明细；成交字段展示以后端返回为准。</li>
+          <li>详情页用于核对同交易对手命中的成交明细；成交字段展示以页面明细展示结果为准。</li>
           <li>当选择关联交易对手统一处理时，应同步保留交易用户与对手用户的处理日志。</li>
         </ol>
       </div>
@@ -7804,11 +7850,11 @@
       },
       'modal-manual-adl': {
         hierarchy: ['一级：可疑用户 或 黑名单', '二级：用户监控 或 黑名单用户', '三级：无', '弹窗：手动ADL'],
-        modals: ['手动ADL弹窗：字段包含交易对、合约ID、操作类型、破产价、当前价、持仓数量、持仓方向、持仓均价、平仓数量、平仓后用户盈亏显示、谷歌验证码；破产价与平仓数量按平台小数位配置截取处理，并按多仓/空仓口径校验。']
+        modals: ['手动ADL弹窗：字段包含交易对、合约ID、操作类型、破产价、当前价、持仓数量、持仓方向、持仓均价、平仓数量、平仓后用户盈亏显示、谷歌验证码；其中当前价、持仓数量、持仓方向、持仓均价为只读输入框，由后台返回；破产价与平仓数量小数点位数跟随平台后端返回，页面截取处理。']
       },
       'modal-auto-join-rules': {
         hierarchy: ['一级：可疑用户 或 黑名单', '二级：用户监控 或 黑名单用户', '三级：无', '弹窗：自动加入规则配置'],
-        modals: ['自动加入规则配置弹窗：自动加入规则模式为单选，黑名单用户确认保存时不允许与可疑用户规则完全重叠|额外增加的触发类型仅在额外模式展示，比可疑用户类型增加触发类型数为只读整数，且必须大于等于 1|确认前需填写谷歌验证码；若模式差异、增加数量或验证码不满足条件则不允许保存。']
+        modals: ['自动加入规则配置弹窗：自动加入规则模式为单选，黑名单用户确认保存时不允许与可疑用户规则完全重叠|额外增加的触发类型仅在额外模式展示，比可疑用户类型增加触发类型数为只读输入框，展示实时统计结果，且必须大于等于 1|确认前需填写谷歌验证码；若模式差异、增加数量或验证码不满足条件则不允许保存。']
       },
       'modal-risk-limit': {
         hierarchy: ['一级：风控', '二级：合约可疑用户', '三级：合约可疑用户限制规则', '弹窗：合约可疑用户限制规则'],
@@ -7816,7 +7862,7 @@
       },
       'modal-monitor-status': {
         hierarchy: ['一级：风控', '二级：各风控监控页', '三级：无', '弹窗：监控状态配置'],
-        modals: ['监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|点击状态按钮后，隐藏值同步为当前选中目标状态|确认时按当前目标状态直接保存，当前原型不校验备注、验证码或二次确认。']
+        modals: ['监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|点击状态按钮后，隐藏值同步为当前选中目标状态|确认时按当前目标状态直接保存，当前原型不校验备注、验证码或二次确认。']
       },
       'modal-same-user': {
         hierarchy: ['一级：风控', '二级：异常登录监控/同秒开仓监控/同提币地址监控/羊毛党监控等', '三级：无', '弹窗：同一用户配置'],
@@ -7824,7 +7870,7 @@
       },
       'modal-permission': {
         hierarchy: ['一级：风控', '二级：处理记录', '三级：查看详情', '弹窗：开启权限'],
-        modals: ['开启权限弹窗：来源页面与处理对象为只读字段，按当前勾选范围带入|开启权限项为多选字段，确认前至少选择 1 项|备注与谷歌验证码均为必填，当前原型按非空校验|确认开启前需同时通过 权限项、备注、验证码 三项校验。']
+        modals: ['开启权限弹窗：来源页面与处理对象为只读输入框，按当前勾选范围带入|开启权限项为多选字段，确认前至少选择 1 项|备注与谷歌验证码均为必填，当前原型按非空校验|确认开启前需同时通过 权限项、备注、验证码 三项校验。']
       },
       'modal-batch-register': {
         hierarchy: ['一级：风控', '二级：批量注册监控', '三级：无', '弹窗：批量注册规则配置'],
@@ -7832,23 +7878,23 @@
       },
       'modal-short-hold-config': {
         hierarchy: ['一级：风控', '二级：高频短时持仓监控', '三级：无', '弹窗：高频短时持仓配置'],
-        modals: ['高频短时持仓配置弹窗：来源页面与当前用户UID为只读字段，仅针对当前用户生效|风控操作为多选字段，确认前至少勾选 1 项|备注当前为选填字段，确认后仅处理当前用户。']
+        modals: ['高频短时持仓配置弹窗：来源页面与当前用户UID为只读输入框，仅针对当前用户生效|风控操作为多选字段，确认前至少勾选 1 项|备注当前为选填字段，确认后仅处理当前用户。']
       },
       'modal-withdraw-address-config': {
         hierarchy: ['一级：风控', '二级：同提币地址监控', '三级：无', '弹窗：同提币地址配置'],
-        modals: ['同提币地址配置弹窗：来源页面、当前用户UID、关联同提币地址用户为只读带出字段|是否关联同提币地址用户为 是/否 单选，选择 是 时处理对象切换为关联用户集合|风控操作至少勾选 1 项后方可确认。']
+        modals: ['同提币地址配置弹窗：来源页面、当前用户UID、关联同提币地址用户为只读输入框带出字段|是否关联同提币地址用户为 是/否 单选，选择 是 时处理对象切换为关联用户集合|风控操作至少勾选 1 项后方可确认。']
       },
       'modal-wool-config': {
         hierarchy: ['一级：风控', '二级：羊毛党监控', '三级：无', '弹窗：羊毛党配置'],
-        modals: ['羊毛党配置弹窗：来源页面与当前用户UID为只读字段|是否关联其下级为单选字段，取值为 所有下级/一级以内/三级以内|风控操作至少勾选 1 项后方可确认，备注当前为选填字段。']
+        modals: ['羊毛党配置弹窗：来源页面与当前用户UID为只读输入框|是否关联其下级为单选字段，取值为 所有下级/一级以内/三级以内|风控操作至少勾选 1 项后方可确认，备注当前为选填字段。']
       },
       'modal-related-action-config': {
         hierarchy: ['一级：风控', '二级：合约可疑用户 或 异常充值监控', '三级：无', '弹窗：相关操作配置'],
-        modals: ['相关操作配置弹窗：来源页面与当前用户UID为只读字段，仅对当前用户生效|风控操作为多选字段，确认前至少勾选 1 项|备注当前为选填字段，确认后仅处理当前用户。']
+        modals: ['相关操作配置弹窗：来源页面与当前用户UID为只读输入框，仅对当前用户生效|风控操作为多选字段，确认前至少勾选 1 项|备注当前为选填字段，确认后仅处理当前用户。']
       },
       'modal-rule-config': {
         hierarchy: ['一级：风控', '二级：各风控监控页', '三级：无', '弹窗：规则配置'],
-        modals: ['通用规则配置弹窗：标题与正文按当前点击来源动态加载，只展示当前来源页面对应的配置块|数字类字段必须明确为 纯数字整数 或 最多 2 位小数，并与页面中的大于等于/小于等于及单位保持一致|底部统一追加谷歌验证码输入框，主确认按钮保存前必须完成当前配置项与验证码校验。']
+        modals: ['通用规则配置弹窗：标题与正文按当前点击来源动态加载，只展示当前来源页面对应的配置块|数字类字段必须明确为 价格/数量字段按后端返回截取、百分比默认保留两位小数点、普通数字展示整数、分钟/MS仅展示整数无小数点，并与页面中的大于等于/小于等于及单位保持一致|底部统一追加谷歌验证码输入框，主确认按钮保存前必须完成当前配置项与验证码校验。']
       },
       'modal-whitelist-events': {
         hierarchy: ['一级：白名单', '二级：白名单用户/IP白名单/提币地址白名单/密码白名单', '三级：无', '弹窗：触发事件'],
@@ -7856,7 +7902,7 @@
       },
       'monitor': {
         hierarchy: ['一级：可疑用户', '二级：用户监控', '三级：可疑用户限制规则、市价历史订单、限价历史订单', '弹窗：自动加入规则配置、手动ADL'],
-        modals: ['自动加入规则配置弹窗：自动加入规则模式为单选字段，黑名单用户保存时必须与可疑用户规则存在差异|额外增加的触发类型仅在额外模式显示，比可疑用户类型增加触发类型数必须大于等于 1|确认前需填写谷歌验证码。', '手动ADL弹窗：字段包含交易对、合约ID、操作类型、破产价、当前价、持仓数量、持仓方向、持仓均价、平仓数量、平仓后用户盈亏显示、谷歌验证码。']
+        modals: ['自动加入规则配置弹窗：自动加入规则模式为单选字段，黑名单用户保存时必须与可疑用户规则存在差异|额外增加的触发类型仅在额外模式显示，比可疑用户类型增加触发类型数为只读输入框，展示实时统计结果，且必须大于等于 1|确认前需填写谷歌验证码。', '手动ADL弹窗：字段包含交易对、合约ID、操作类型、破产价、当前价、持仓数量、持仓方向、持仓均价、平仓数量、平仓后用户盈亏显示、谷歌验证码。']
       },
       'rules': {
         hierarchy: ['一级：可疑用户', '二级：用户监控', '三级：可疑用户限制规则', '弹窗：无'],
@@ -7920,39 +7966,39 @@
       },
       'risk-login': {
         hierarchy: ['一级：风控', '二级：异常登录监控', '三级：无', '弹窗：规则配置、监控状态配置、同一用户配置'],
-        modals: ['规则配置弹窗：标题与正文按当前来源动态加载，异常登录页仅展示本页识别规则|数字与比例字段需明确整数/小数位、单位和 大于等于/小于等于 口径|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '同一用户配置弹窗：来源页面、当前用户UID、关联同秒开仓用户按当前记录带出|是否关联同秒开仓用户为 是/否 单选，风控操作至少勾选 1 项后方可确认。']
+        modals: ['规则配置弹窗：标题与正文按当前来源动态加载，异常登录页仅展示本页识别规则|数字与比例字段需明确整数/小数位、单位和 大于等于/小于等于 口径|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '同一用户配置弹窗：来源页面、当前用户UID、关联同秒开仓用户为只读输入框按当前记录带出|是否关联同秒开仓用户为 是/否 单选，风控操作至少勾选 1 项后方可确认。']
       },
       'risk-batch-register': {
         hierarchy: ['一级：风控', '二级：批量注册监控', '三级：无', '弹窗：规则配置、监控状态配置、批量注册配置'],
-        modals: ['规则配置弹窗：按同IP、同设备、同邮箱后缀三组口径动态加载配置内容|所有人数与时间差字段需明确整数、单位及 大于等于/小于等于 口径|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '批量注册配置弹窗：关联同IP/同设备/同邮箱后缀用户数为只读整数，是否关联用户为多选字段|关联用户数按过滤白名单、去重、手动删除后的最终集合实时统计|确认前需至少选择 1 项风控操作，且最终关联用户集合不能为空。']
+        modals: ['规则配置弹窗：按同IP、同设备、同邮箱后缀三组口径动态加载配置内容|所有人数与时间差字段需明确整数、单位及 大于等于/小于等于 口径|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '批量注册配置弹窗：关联同IP/同设备/同邮箱后缀用户数为只读输入框，展示各维度候选用户规模整数结果，是否关联用户为多选字段|关联用户数为只读展示输入框，按过滤白名单、去重、手动删除后的最终集合实时统计|确认前需至少选择 1 项风控操作，且最终关联用户集合不能为空。']
       },
       'risk-short-hold': {
         hierarchy: ['一级：风控', '二级：高频短时持仓监控', '三级：无', '弹窗：规则配置、监控状态配置、高频短时持仓配置'],
-        modals: ['规则配置弹窗：按当前页面动态加载持仓时间、频率、比例和异常处理方式配置|数字字段需明确整数/小数位、单位及比较符号|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '高频短时持仓配置弹窗：来源页面与当前用户UID为只读字段，仅针对当前用户生效|风控操作至少勾选 1 项后方可确认，备注当前为选填字段。']
+        modals: ['规则配置弹窗：按当前页面动态加载持仓时间、频率、比例和异常处理方式配置|数字字段需明确整数/小数位、单位及比较符号|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '高频短时持仓配置弹窗：来源页面与当前用户UID为只读输入框，仅针对当前用户生效|风控操作至少勾选 1 项后方可确认，备注当前为选填字段。']
       },
       'risk-same-second-open': {
         hierarchy: ['一级：风控', '二级：同秒开仓监控', '三级：无', '弹窗：规则配置、监控状态配置、同一用户配置'],
-        modals: ['规则配置弹窗：按当前页面动态加载同秒开仓次数、涉及用户数、时间范围与异常处理方式|次数、人数、时间范围等字段需明确整数与单位口径|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '同一用户配置弹窗：当前用户UID、关联同秒开仓用户默认带出|是否关联同秒开仓用户为 是/否 单选，风控操作至少勾选 1 项后方可确认。']
+        modals: ['规则配置弹窗：按当前页面动态加载同秒开仓次数、涉及用户数、时间范围与异常处理方式|次数、人数、时间范围等字段需明确整数与单位口径|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '同一用户配置弹窗：当前用户UID、关联同秒开仓用户为只读输入框默认带出|是否关联同秒开仓用户为 是/否 单选，风控操作至少勾选 1 项后方可确认。']
       },
       'risk-withdraw-address-monitor': {
         hierarchy: ['一级：风控', '二级：同提币地址监控', '三级：无', '弹窗：规则配置、监控状态配置、同提币地址配置'],
-        modals: ['规则配置弹窗：按当前页面动态加载同提币用户数、时间范围与异常处理方式|人数和时间范围字段需明确整数与单位口径|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '同提币地址配置弹窗：当前用户UID、关联同提币地址用户默认带出|是否关联同提币地址用户为 是/否 单选，风控操作至少勾选 1 项后方可确认。']
+        modals: ['规则配置弹窗：按当前页面动态加载同提币用户数、时间范围与异常处理方式|人数和时间范围字段需明确整数与单位口径|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '同提币地址配置弹窗：当前用户UID、关联同提币地址用户为只读输入框默认带出|是否关联同提币地址用户为 是/否 单选，风控操作至少勾选 1 项后方可确认。']
       },
       'risk-wool-monitor': {
         hierarchy: ['一级：风控', '二级：羊毛党监控', '三级：无', '弹窗：规则配置、监控状态配置、羊毛党配置'],
-        modals: ['规则配置弹窗：按当前页面动态加载比例阈值、金额阈值与异常处理方式|比例字段输入不带 %，金额字段最多 2 位小数|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '羊毛党配置弹窗：来源页面与当前用户UID为只读字段|是否关联其下级为单选字段，取值为 所有下级/一级以内/三级以内|风控操作至少勾选 1 项后方可确认，备注当前为选填字段。']
+        modals: ['规则配置弹窗：按当前页面动态加载比例阈值、金额阈值与异常处理方式|比例字段按百分比口径录入与展示，页面展示默认保留两位小数点；金额字段小数点位数跟随平台后端返回，页面截取处理|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '羊毛党配置弹窗：来源页面与当前用户UID为只读输入框|是否关联其下级为单选字段，取值为 所有下级/一级以内/三级以内|风控操作至少勾选 1 项后方可确认，备注当前为选填字段。']
       },
       'risk-contract-suspicious-monitor': {
         hierarchy: ['一级：风控', '二级：合约可疑用户', '三级：合约可疑用户限制规则、市价历史订单、限价历史订单', '弹窗：规则配置、监控状态配置、相关操作配置、合约可疑用户限制规则'],
-        modals: ['规则配置弹窗：按当前页面动态加载胜率阈值、盈利率阈值与最低历史仓位数|比例字段输入不带 %，仓位数为纯数字整数|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '相关操作配置弹窗：来源页面与当前用户UID为只读字段，仅对当前用户生效|风控操作至少勾选 1 项后方可确认，备注当前为选填字段。', '合约可疑用户限制规则弹窗：限价延迟和滑点百分比需分别校验上下限关系，确认前需填写谷歌验证码。']
+        modals: ['规则配置弹窗：按当前页面动态加载胜率阈值、盈利率阈值与最低历史仓位数|比例字段按百分比口径录入与展示，页面展示默认保留两位小数点；仓位数为纯数字整数|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '相关操作配置弹窗：来源页面与当前用户UID为只读输入框，仅对当前用户生效|风控操作至少勾选 1 项后方可确认，备注当前为选填字段。', '合约可疑用户限制规则弹窗：限价延迟按整数MS展示，滑点百分比默认保留两位小数点，并需分别校验上下限关系，确认前需填写谷歌验证码。']
       },
       'risk-abnormal-deposit-monitor': {
         hierarchy: ['一级：风控', '二级：异常充值监控', '三级：无', '弹窗：规则配置、监控状态配置、相关操作配置'],
-        modals: ['规则配置弹窗：按当前页面动态加载触发次数、停留时长、交易占比与记录逻辑|次数和时长字段为整数，占比字段输入不带 %|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '相关操作配置弹窗：来源页面与当前用户UID为只读字段，仅对当前用户生效|风控操作至少勾选 1 项后方可确认，备注当前为选填字段。']
+        modals: ['规则配置弹窗：按当前页面动态加载触发次数、停留时长、交易占比与记录逻辑|次数和停留时长字段为整数，停留时长按分钟/小时口径展示时无小数点；占比字段按百分比口径录入与展示，页面展示默认保留两位小数点|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '相关操作配置弹窗：来源页面与当前用户UID为只读输入框，仅对当前用户生效|风控操作至少勾选 1 项后方可确认，备注当前为选填字段。']
       },
       'risk-password-monitor': {
         hierarchy: ['一级：风控', '二级：用户同密码', '三级：查看详情、同密码用户配置', '弹窗：规则配置、监控状态配置'],
-        modals: ['规则配置弹窗：按当前页面动态加载登录密码、支付密码、双密码同时命中三组阈值|三组阈值均为纯数字整数，并保留大于等于口径|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。']
+        modals: ['规则配置弹窗：按当前页面动态加载登录密码、支付密码、双密码同时命中三组阈值|三组阈值均为纯数字整数，并保留大于等于口径|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。']
       },
       'risk-password-detail': {
         hierarchy: ['一级：风控', '二级：用户同密码', '三级：查看详情', '弹窗：无'],
@@ -7964,7 +8010,7 @@
       },
       'risk-trade-peer-monitor': {
         hierarchy: ['一级：风控', '二级：交易同用户风控', '三级：查看详情', '弹窗：规则配置、监控状态配置、交易同用户风控配置'],
-        modals: ['规则配置弹窗：按当前页面动态加载统计时间范围、交易次数、最小总金额与统计类型|次数为整数，金额最多 2 位小数，均需明确单位与比较符号|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读字段，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '交易同用户风控配置弹窗：当前用户UID与关联交易对手用户默认带出|是否关联交易对手为 是/否 单选，选择 是 时处理对象切换为 当前用户 + 交易对手集合|风控操作至少勾选 1 项后方可确认。']
+        modals: ['规则配置弹窗：按当前页面动态加载统计时间范围、交易次数、最小总金额与统计类型|次数为整数；金额字段小数点位数跟随平台后端返回，页面截取处理，均需明确单位与比较符号|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '交易同用户风控配置弹窗：当前用户UID与关联交易对手用户为只读输入框默认带出|是否关联交易对手为 是/否 单选，选择 是 时处理对象切换为 当前用户 + 交易对手集合|风控操作至少勾选 1 项后方可确认。']
       },
       'risk-trade-peer-detail': {
         hierarchy: ['一级：风控', '二级：交易同用户风控', '三级：查看详情', '弹窗：交易同用户风控配置'],
@@ -7972,7 +8018,7 @@
       },
       'risk-handle-record': {
         hierarchy: ['一级：风控', '二级：处理记录', '三级：查看详情', '弹窗：开启权限'],
-        modals: ['开启权限弹窗：来源页面与处理对象为只读字段，按当前勾选范围带入|开启权限项至少勾选 1 项，备注与谷歌验证码均为必填|确认开启前需同时通过 权限项、备注、验证码 三项校验。']
+        modals: ['开启权限弹窗：来源页面与处理对象为只读输入框，按当前勾选范围带入|开启权限项至少勾选 1 项，备注与谷歌验证码均为必填|确认开启前需同时通过 权限项、备注、验证码 三项校验。']
       },
       'risk-handle-record-detail': {
         hierarchy: ['一级：风控', '二级：处理记录', '三级：查看详情', '弹窗：开启权限'],
@@ -7981,13 +8027,11 @@
     };
 
     const globalNumericStandards = [
-      '弹窗整数输入：用户数、次数、条数、人数、时长阈值、天/小时/分钟/秒/MS、最低历史仓位数等，仅允许输入 0-9 纯数字整数；不允许小数、负数、空格、千分位。',
-      '弹窗金额输入：充值金额、提现金额、盈利金额、最小总金额、成交金额等，统一最多 2 位小数；输入时不带币种、不带逗号。',
-      '弹窗百分比输入：胜率、盈利率、覆盖率、滑点百分比等，统一输入 0-100 的纯数字整数，不输入 %；页面显示时统一补足 2 位小数并追加 %。',
-      '页面计数显示：用户数、次数、条数、群组数、配置数统一显示整数，不补小数位。',
-      '页面金额显示：价格、充值、提现、盈利、成交金额统一显示 2 位小数；金额大于等于 1000 时增加千分位分隔，币种放在数字后方。',
-      '页面时间与时长显示：时间戳统一显示 YYYY-MM-DD HH:mm:ss；时长统一显示 整数+单位；杠杆统一显示 整数+x。',
-      '弹窗数字输入框验收：必须能明确判定该输入框是 整数 还是 最多2位小数，不能只写“请输入数字”。'
+      '价格、数量字段：小数点位数跟随平台后端返回，页面截取处理。',
+      '百分比字段：百分比默认保留两位小数点。',
+      '普通数字、统计字段：展示为整数，统计结果截取取整。',
+      '分钟、毫秒MS等时间字段：仅展示整数，无小数点。',
+      '数字字段验收：页面、弹窗内所有数字、统计、时间字段必须明确对应以上口径，不可只写“请输入数字”。'
     ];
 
     const globalWrapStandards = [
@@ -8003,30 +8047,208 @@
       return String(title || '').replace(/^今日/, '');
     }
 
-    function buildSupplementCard(title, items) {
+    const thirdLevelPageIds = new Set([
+      'rules',
+      'market-history',
+      'limit-history',
+      'blacklist-market-history',
+      'blacklist-limit-history',
+      'risk-password-detail',
+      'risk-password-config',
+      'risk-trade-peer-detail',
+      'risk-handle-record-detail',
+      'whitelist-add'
+    ]);
+
+    function extractHierarchyInfo(pageId) {
+      const meta = specSupplementMeta[pageId] || {};
+      const info = {
+        level1: '',
+        level2: '',
+        level3: '',
+        modal: ''
+      };
+      (meta.hierarchy || []).forEach(item => {
+        const text = String(item || '').trim();
+        if (text.startsWith('一级：')) info.level1 = text.replace('一级：', '').trim();
+        if (text.startsWith('二级：')) info.level2 = text.replace('二级：', '').trim();
+        if (text.startsWith('三级：')) info.level3 = text.replace('三级：', '').trim();
+        if (text.startsWith('弹窗：')) info.modal = text.replace('弹窗：', '').trim();
+      });
+      return info;
+    }
+
+    function splitHierarchyValue(value) {
+      const text = String(value || '').trim();
+      if (!text || text === '无' || text === '无三级页面') return [];
+      return text.split(/[、,，]/).map(item => item.trim()).filter(Boolean);
+    }
+
+    function formatEntityList(value, suffix) {
+      const items = splitHierarchyValue(value);
+      if (!items.length) return '无';
+      return items.map(item => {
+        if (item === '无') return '无';
+        if (suffix === '页面' && /页面$|页$/.test(item)) return item;
+        if (suffix === '弹窗' && /弹窗$/.test(item)) return item;
+        return `${item}${suffix}`;
+      }).join('、');
+    }
+
+    function getModalTitles(meta) {
+      const modals = (meta && meta.modals ? meta.modals : [])
+        .map(item => parseSupplementModalItem(item).title)
+        .filter(title => title && title !== '无独立弹窗');
+      if (!modals.length) return '无';
+      return modals.map(title => /弹窗$/.test(title) ? title : `${title}弹窗`).join('、');
+    }
+
+    function isThirdLevelContext(pageId) {
+      return thirdLevelPageIds.has(pageId);
+    }
+
+    function getEntryText(pageId) {
+      const info = extractHierarchyInfo(pageId);
+      if (isThirdLevelContext(pageId) && info.level2) {
+        return `左侧导航进入${info.level1 || '当前一级页面'}页面`;
+      }
+      if (info.level2) {
+        return `左侧导航进入${info.level1 || '当前一级页面'}页面`;
+      }
+      return `左侧导航进入${info.level1 || '当前一级页面'}页面`;
+    }
+
+    function normalizeSpecCardTitle(title) {
+      return String(title || '')
+        .replace(/口径定义/g, '')
+        .replace(/页面名：/g, '')
+        .trim();
+    }
+
+    function sanitizeBusinessSpecText(text) {
+      return String(text || '')
+        .replace(/平台接口返回/g, '页面实时展示数据')
+        .replace(/由平台接口返回/g, '由页面展示数据带出')
+        .replace(/接口返回/g, '页面展示结果')
+        .replace(/后端行情返回/g, '页面行情展示数据')
+        .replace(/后端返回/g, '页面展示结果')
+        .replace(/后端币种配置规则/g, '平台币种配置规则')
+        .replace(/后端统一返回时间戳，前端根据设备当前时区自动换算展示/g, '页面按当前设备时区展示对应时间')
+        .replace(/后端底层逻辑/g, '页面业务逻辑')
+        .replace(/接口内部参数/g, '页面配置项')
+        .replace(/底层字段/g, '页面展示字段')
+        .replace(/数据库/g, '页面数据')
+        .replace(/数据表/g, '页面数据')
+        .replace(/底层存储/g, '页面处理结果');
+    }
+
+    function createTemplateLine(text, bold = false) {
+      const line = document.createElement('p');
+      line.className = 'spec-template-line';
+      if (bold) {
+        const strong = document.createElement('strong');
+        strong.textContent = text;
+        line.appendChild(strong);
+      } else {
+        line.textContent = text;
+      }
+      return line;
+    }
+
+    function getCardNamePrefix(pageId, title) {
+      const cleanTitle = normalizeSpecCardTitle(title);
+      const isModal = /弹窗$/.test(cleanTitle);
+      if (isModal) {
+        return isThirdLevelContext(pageId) ? '三级页面名：' : '二级页面名：';
+      }
+      return isThirdLevelContext(pageId) ? '三级页面名：' : '二级页面名：';
+    }
+
+    function getTemplateFallbackLines(cardTitle) {
+      return [
+        `当前${cardTitle}的功能说明以页面实际业务流程为准。`,
+        `当前${cardTitle}的展示与交互逻辑以页面实现为准。`,
+        `当前${cardTitle}的字段名称、字段类型和展示内容以页面当前展示结果为准。`,
+        `当前${cardTitle}的字段处理逻辑以当前页面交互限制为准。`,
+        `当前${cardTitle}的展示内容以页面当前展示结果为准。`,
+        `当前${cardTitle}的数据展示与格式化规则以页面当前显示结果为准。`,
+        `当前${cardTitle}的边界与拦截规则以页面交互校验为准。`,
+        `当前${cardTitle}的确认保存逻辑以页面当前按钮校验结果为准。`,
+        `${cardTitle}涉及数字输入或数字展示时，格式、位数、单位和比较符号以当前页面显示规则为准。`,
+        `当前${cardTitle}无独立计算公式时，展示结果以页面自动计算或页面校验结果为准。`,
+        `当前${cardTitle}确认操作以页面实际按钮逻辑为准。`,
+        `当前${cardTitle}取消操作关闭当前页面或弹窗，不执行保存。`,
+        `当前${cardTitle}提示文案内容以页面展示或语言包返回为准。`,
+        `当前${cardTitle}页面初始化展示内容以页面默认展示结果为准。`,
+        `当前${cardTitle}列表与字段展示规则以页面显示限制为准。`,
+        `当前${cardTitle}超出显示范围时，换行、省略与按钮折行规则以页面统一显示标准为准。`
+      ];
+    }
+
+    function fillTemplateLines(sourceLines, cardTitle) {
+      const lines = sourceLines.map(item => sanitizeBusinessSpecText(item));
+      const fallbacks = getTemplateFallbackLines(cardTitle);
+      while (lines.length < 16) {
+        lines.push(fallbacks[lines.length] || `当前${cardTitle}规则以页面实际展示为准。`);
+      }
+      return lines;
+    }
+
+    function buildFixedFormatCard(pageId, title, sourceLines) {
       const card = document.createElement('div');
       card.className = 'spec-card spec-card--supplement';
-      const heading = document.createElement('strong');
-      heading.textContent = title;
-      const sub = document.createElement('em');
-      sub.textContent = '开发与测试对应';
-      const list = document.createElement('ol');
-      items.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        list.appendChild(li);
-      });
-      card.appendChild(heading);
-      card.appendChild(sub);
-      card.appendChild(list);
+      const cleanTitle = normalizeSpecCardTitle(title) || '当前页面';
+      const lines = fillTemplateLines((sourceLines || []).map(item => String(item || '').trim()).filter(Boolean), cleanTitle);
+      card.appendChild(createTemplateLine(`${getCardNamePrefix(pageId, cleanTitle)}${cleanTitle}`, true));
+      card.appendChild(createTemplateLine('一、功能说明', true));
+      card.appendChild(createTemplateLine(`1.${lines[0]}`));
+      card.appendChild(createTemplateLine(`2.${lines[1]}`));
+      card.appendChild(createTemplateLine('二、字段说明', true));
+      card.appendChild(createTemplateLine(`1、${lines[2]}`));
+      card.appendChild(createTemplateLine(`2、${lines[3]}`));
+      card.appendChild(createTemplateLine('三、展示规则', true));
+      card.appendChild(createTemplateLine(`1、${lines[4]}`));
+      card.appendChild(createTemplateLine(`2、${lines[5]}`));
+      card.appendChild(createTemplateLine('四、校验规则', true));
+      card.appendChild(createTemplateLine(`1、${lines[6]}`));
+      card.appendChild(createTemplateLine(`2、${lines[7]}`));
+      card.appendChild(createTemplateLine('五、数字规则', true));
+      card.appendChild(createTemplateLine(lines[8]));
+      card.appendChild(createTemplateLine('六、公式说明', true));
+      card.appendChild(createTemplateLine(lines[9]));
+      card.appendChild(createTemplateLine('七、确认规则', true));
+      card.appendChild(createTemplateLine(`1、${lines[10]}`));
+      card.appendChild(createTemplateLine(`2、${lines[11]}`));
+      card.appendChild(createTemplateLine('八、提示文案', true));
+      card.appendChild(createTemplateLine(`1、${lines[12]}`));
+      card.appendChild(createTemplateLine(`2、${lines[13]}`));
+      card.appendChild(createTemplateLine('九、列表显示规则', true));
+      card.appendChild(createTemplateLine(`1、${lines[14]}`));
+      card.appendChild(createTemplateLine(`2、${lines[15]}`));
       return card;
+    }
+
+    function createPinnedStructureCard(pageId) {
+      const info = extractHierarchyInfo(pageId);
+      const meta = specSupplementMeta[pageId] || {};
+      const thirdLevelContext = isThirdLevelContext(pageId);
+      const currentPageName = pageNames[pageId] || info.level2 || '当前页面';
+      const structureCard = document.createElement('div');
+      structureCard.className = 'spec-card spec-card--supplement';
+      structureCard.appendChild(createTemplateLine('页面结构和入口', true));
+      structureCard.appendChild(createTemplateLine(`一级页面：${info.level1 || '当前一级页面'}`));
+      structureCard.appendChild(createTemplateLine(`入口：${getEntryText(pageId)}`));
+      structureCard.appendChild(createTemplateLine(`二级页面：${formatEntityList(thirdLevelContext ? info.level2 : (currentPageName || info.level2), '页面')}`));
+      structureCard.appendChild(createTemplateLine(`二级页面-弹窗：${thirdLevelContext ? '无' : getModalTitles(meta)}`));
+      structureCard.appendChild(createTemplateLine(`三级页面：${thirdLevelContext ? formatEntityList(currentPageName, '页面') : formatEntityList(info.level3, '页面')}`));
+      structureCard.appendChild(createTemplateLine(`三级页面-弹窗：${thirdLevelContext ? getModalTitles(meta) : '无'}`));
+      return structureCard;
     }
 
     function renderPinnedStructureCard(pageId) {
       if (!specCurrentStructureSlot) return;
       specCurrentStructureSlot.innerHTML = '';
-      const meta = specSupplementMeta[pageId] || specSupplementMeta.overview || {};
-      specCurrentStructureSlot.appendChild(buildSupplementCard('页面结构与入口', meta.hierarchy || ['当前页未配置页面结构说明。']));
+      specCurrentStructureSlot.appendChild(createPinnedStructureCard(pageId));
     }
 
     function parseSupplementModalItem(item) {
@@ -8051,17 +8273,562 @@
       };
     }
 
-    function renderSupplementSpecCards() {
-      Object.entries(specSupplementMeta).forEach(([pageId, meta]) => {
-        const page = specPages.find(item => item.dataset.specPage === pageId);
-        if (!page) return;
-        page.querySelectorAll('.spec-card--supplement').forEach(card => card.remove());
-        (meta.modals && meta.modals.length ? meta.modals : ['当前页无独立弹窗。']).forEach(item => {
-          const modalCard = parseSupplementModalItem(item);
-          page.appendChild(buildSupplementCard(modalCard.title, modalCard.items));
+    function isModalSpecPage(pageId) {
+      return String(pageId || '').startsWith('modal-');
+    }
+
+    function isSecondLevelSpecPage(pageId) {
+      return !!pageId && !isModalSpecPage(pageId) && !isThirdLevelContext(pageId);
+    }
+
+    function buildOverviewMetricRule(metric, index) {
+      const title = sanitizeMetricTitle(metric && metric.title ? metric.title : `指标${index + 1}`);
+      const hint = sanitizeBusinessSpecText(metric && metric.hint ? metric.hint : `${title}以当前页面展示口径为准`);
+      const isConfigMetric = /区间|阈值|百分比/.test(title);
+      const isCountMetric = /次数|用户数|数量|订单|事件|记录|白名单|黑名单|正常用户/.test(title);
+      if (isConfigMetric) {
+        return `${index + 1}：${title}：按当前页面当前生效配置展示，不按累计命中次数统计，页面展示内容以${hint}为准`;
+      }
+      if (isCountMetric) {
+        return `${index + 1}：${title}：按当前时间筛选范围内命中当前页面统计口径的数据量统计，页面展示内容以${hint}为准`;
+      }
+      return `${index + 1}：${title}：按当前时间筛选范围内结合当前页面统计口径展示，页面展示内容以${hint}为准`;
+    }
+
+    function createOverviewMetricDefinitionCard(pageId) {
+      const metrics = overviewMetrics[pageId] || [];
+      if (!metrics.length) return null;
+      const card = document.createElement('div');
+      card.className = 'spec-card spec-card--supplement spec-card--overview-metrics';
+      const title = document.createElement('strong');
+      title.textContent = '异常统计指标定义';
+      card.appendChild(title);
+      metrics.forEach((metric, index) => {
+        card.appendChild(createTemplateLine(buildOverviewMetricRule(metric, index)));
+      });
+      return card;
+    }
+
+    function createSimpleSupplementCard(titleText, items) {
+      if (!items || !items.length) return null;
+      const card = document.createElement('div');
+      card.className = 'spec-card spec-card--supplement';
+      const title = document.createElement('strong');
+      title.textContent = titleText;
+      card.appendChild(title);
+      items.forEach(item => {
+        card.appendChild(createTemplateLine(item));
+      });
+      return card;
+    }
+
+    function getPageSpecSourceRoot(pageId) {
+      if (!pageId || isModalSpecPage(pageId)) return null;
+      return document.getElementById(pageId);
+    }
+
+    function collectFilterRuleItems(root) {
+      if (!root) return [];
+      const fieldGrid = root.querySelector('.field-grid');
+      if (!fieldGrid) return [];
+      const items = [];
+      Array.from(fieldGrid.querySelectorAll('.field')).forEach(field => {
+        const labelNode = field.querySelector('label');
+        const label = labelNode ? labelNode.textContent.replace(/\s+/g, ' ').trim() : '';
+        if (!label || label === '操作') return;
+        const input = field.querySelector('input, select, textarea');
+        if (!input) return;
+        const tagName = input.tagName.toLowerCase();
+        const type = (input.getAttribute('type') || '').toLowerCase();
+        if (tagName === 'select') {
+          const firstOption = input.querySelector('option');
+          items.push(`${items.length + 1}：${label}：下拉单选，默认值为${firstOption ? firstOption.textContent.trim() : '全部'}，切换选项后按当前筛选条件参与查询`);
+          return;
+        }
+        if (type === 'datetime-local' || type === 'date') {
+          items.push(`${items.length + 1}：${label}：时间选择，按当前页面时间格式选择，开始时间不可大于结束时间`);
+          return;
+        }
+        items.push(`${items.length + 1}：${label}：文本输入，按当前页面占位提示输入查询内容，点击查询后按当前条件刷新当前列表`);
+      });
+      const filterButtons = Array.from(fieldGrid.querySelectorAll('button')).map(button => button.textContent.trim());
+      if (filterButtons.includes('查询')) {
+        items.push(`${items.length + 1}：查询：点击后按当前筛选条件刷新当前列表与异常统计`);
+      }
+      if (filterButtons.includes('重置')) {
+        items.push(`${items.length + 1}：重置：点击后清空当前筛选条件并恢复默认值`);
+      }
+      return items;
+    }
+
+    function collectPageInputRuleItems(root) {
+      if (!root) return [];
+      const fields = Array.from(root.querySelectorAll('input[type="text"], input[type="number"], input[type="datetime-local"], input[type="date"], textarea'))
+        .filter(field => !field.closest('.modal-overlay'))
+        .filter(field => !field.closest('.inline-entry-modal'))
+        .filter(field => !field.disabled && !field.readOnly);
+      const seen = new Set();
+      const items = [];
+      fields.forEach(field => {
+        const label = getFieldLabelText(field);
+        if (!label || seen.has(label)) return;
+        seen.add(label);
+        const type = (field.getAttribute('type') || '').toLowerCase();
+        if (type === 'datetime-local' || type === 'date') {
+          items.push(`${items.length + 1}：${label}：手动选择，按当前页面时间格式填写，开始结束时间需满足当前页面时间范围校验`);
+          return;
+        }
+        items.push(`${items.length + 1}：${label}：${getInputRuleDescription(label, field)}`);
+      });
+      return items;
+    }
+
+    function describeTableHeaderRule(header) {
+      if (/时间/.test(header)) {
+        return `${header}：列表按时间文本展示，展示精确到秒，空值显示 --`;
+      }
+      if (/比例|率|百分比/.test(header)) {
+        return `${header}：百分比默认保留两位小数点`;
+      }
+      if (/价格|单价|均价|金额|盈利|保证金|余额|充值|提现|数量/.test(header)) {
+        return `${header}：小数点位数跟随平台后端返回，页面截取处理`;
+      }
+      if (/时间|时长|天数|分钟|小时|秒|MS/.test(header)) {
+        return `${header}：仅展示整数，无小数点`;
+      }
+      if (/数量|用户数|次数|笔数|人数|配置数|事件数|触发数/.test(header)) {
+        return `${header}：展示为整数，统计结果截取取整`;
+      }
+      if (/操作/.test(header)) {
+        return `${header}：展示当前行可执行操作按钮，按钮显示以当前记录状态为准`;
+      }
+      return `${header}：按当前列表字段文本展示，空值显示 --`;
+    }
+
+    function collectTableRuleItems(root) {
+      if (!root) return [];
+      const table = root.querySelector('table');
+      if (!table) return [];
+      const headers = Array.from(table.querySelectorAll('thead th'))
+        .map(th => th.textContent.replace(/\s+/g, ' ').trim())
+        .filter(text => text && text !== 'on');
+      const items = headers.map((header, index) => `${index + 1}：${describeTableHeaderRule(header)}`);
+      const hasPagination = root.querySelector('.page-chip');
+      if (hasPagination) {
+        items.push(`${items.length + 1}：分页：点击分页按钮切换当前列表页码，列表按当前筛选条件保持展示`);
+      }
+      return items;
+    }
+
+    function describeActionRule(label) {
+      if (label === '查询') return '点击后按当前筛选条件刷新当前列表与异常统计';
+      if (label === '重置') return '点击后清空当前筛选条件并恢复默认值';
+      if (label === '规则配置') return '点击后打开当前页面对应规则配置，确认后以最新配置结果为准';
+      if (label === '监控状态配置') return '点击后打开监控状态配置弹窗，确认后以当前状态展示结果为准';
+      if (/返回/.test(label)) return '点击后返回上一级页面，当前页面展示按返回目标页口径为准';
+      if (/查看详情/.test(label)) return '点击后进入当前记录对应详情页面';
+      if (/历史订单/.test(label)) return '点击后进入对应历史订单页面';
+      if (/添加/.test(label)) return '点击后打开当前新增弹窗或新增页面';
+      if (/配置/.test(label)) return '点击后打开当前记录对应配置弹窗';
+      if (/导出/.test(label)) return '点击后按当前筛选条件导出列表数据';
+      if (/批量|可疑用户|正常用户|正常事件|正常操作|黑名单用户|禁止/.test(label)) {
+        return '点击后对当前选中记录执行对应处理，处理完成后刷新当前列表';
+      }
+      if (/确认|确定/.test(label)) return '点击后校验当前页面必填项，校验通过后提交当前操作';
+      if (/取消|关闭/.test(label)) return '点击后关闭当前区域或弹窗，不保留本次未提交内容';
+      return '点击后执行当前页面对应操作，页面结果以当前展示内容为准';
+    }
+
+    function collectActionRuleItems(root) {
+      if (!root) return [];
+      const labels = new Set();
+      Array.from(root.querySelectorAll('.page-tools .button, .batch-action-bar .button, .table-wrap .action-link, .table-container .action-link, .config-actions .button, .button-group .button'))
+        .forEach(button => {
+          if (button.closest('.modal-overlay') || button.closest('.inline-entry-modal')) return;
+          const text = button.textContent.replace(/\s+/g, ' ').trim();
+          if (!text || text === '口径定义' || text === '查询' || text === '重置') return;
+          labels.add(text);
         });
-        page.appendChild(buildSupplementCard('数字字段标准', globalNumericStandards));
-        page.appendChild(buildSupplementCard('列表换行标准', globalWrapStandards));
+      return Array.from(labels).map((label, index) => `${index + 1}：${label}：${describeActionRule(label)}`);
+    }
+
+    function describeNumericRule(name) {
+      if (/比例|率|百分比/.test(name)) {
+        return `${name}：百分比默认保留两位小数点`;
+      }
+      if (/价格|单价|均价|金额|盈利|保证金|余额|充值|提现|数量/.test(name)) {
+        return `${name}：小数点位数跟随平台后端返回，页面截取处理`;
+      }
+      if (/时间|时长|天数|分钟|小时|秒|MS/.test(name)) {
+        return `${name}：仅展示整数，无小数点`;
+      }
+      return `${name}：展示为整数，统计结果截取取整`;
+    }
+
+    function collectNumericRuleItems(pageId, root) {
+      if (!root) return [];
+      const names = [];
+      const metrics = overviewMetrics[pageId] || [];
+      metrics.forEach(metric => {
+        const title = sanitizeMetricTitle(metric && metric.title ? metric.title : '').trim();
+        if (title) names.push(title);
+      });
+      const table = root.querySelector('table');
+      if (table) {
+        Array.from(table.querySelectorAll('thead th')).forEach(th => {
+          const text = th.textContent.replace(/\s+/g, ' ').trim();
+          if (!text) return;
+          if (/金额|价格|单价|均价|盈利|保证金|余额|比例|率|百分比|数量|用户数|次数|笔数|人数|配置数|事件数|触发数|时间|时长|天数|分钟|小时|秒|MS/.test(text)) {
+            names.push(text);
+          }
+        });
+      }
+      const uniqueNames = Array.from(new Set(names));
+      return uniqueNames.map((name, index) => `${index + 1}：${describeNumericRule(name)}`);
+    }
+
+    function renderSupplementSpecCards() {
+      specPages.forEach(page => {
+        const pageId = page.dataset.specPage;
+        if (!pageId) return;
+        page.querySelectorAll('.spec-card--supplement').forEach(card => card.remove());
+        if (isModalSpecPage(pageId)) return;
+        const root = getPageSpecSourceRoot(pageId);
+        if (!root) return;
+        const metricCard = createOverviewMetricDefinitionCard(pageId);
+        if (metricCard) page.appendChild(metricCard);
+        const numericCard = createSimpleSupplementCard('数字参数口径', collectNumericRuleItems(pageId, root));
+        if (numericCard) page.appendChild(numericCard);
+        const inputCard = createSimpleSupplementCard('输入框输入规则', collectPageInputRuleItems(root));
+        if (inputCard) page.appendChild(inputCard);
+        const filterCard = createSimpleSupplementCard('筛选框口径', collectFilterRuleItems(root));
+        if (filterCard) page.appendChild(filterCard);
+        const tableCard = createSimpleSupplementCard('列表字段口径', collectTableRuleItems(root));
+        if (tableCard) page.appendChild(tableCard);
+        const actionCard = createSimpleSupplementCard('操作按钮口径', collectActionRuleItems(root));
+        if (actionCard) page.appendChild(actionCard);
+      });
+    }
+
+    function getFieldLabelText(field) {
+      if (!field) return '';
+      const wrapper = field.closest('.modal-field, .config-row, .field');
+      const label = wrapper ? wrapper.querySelector('label') : null;
+      return label ? label.textContent.replace(/\s+/g, ' ').trim() : '';
+    }
+
+    function getInputRuleDescription(labelText, field) {
+      const label = String(labelText || '').replace(/[:：]/g, '').trim();
+      const fieldType = (field.getAttribute('type') || field.tagName || '').toLowerCase();
+      if (label === '破产价') {
+        return '手动输入，校验规则随页面当前状态动态变化，根据当前状态限制输入数值大小，小数点位数跟随平台后端返回，页面截取处理';
+      }
+      if (label === '平仓数量') {
+        return '手动输入，输入数值不可大于页面展示的用户持仓数量，小数点位数跟随平台后端返回，页面截取处理';
+      }
+      if (label.includes('验证码')) {
+        return '手动输入，按当前页面验证码校验规则执行，不可为空';
+      }
+      if (/百分比|比例|率/.test(label)) {
+        return '手动输入，按当前页面百分比校验规则执行，百分比默认保留两位小数点';
+      }
+      if (/时间|时长|天数|分钟|小时|秒|MS/.test(label)) {
+        return '手动输入，仅支持整数，无小数点';
+      }
+      if (/用户数|次数|笔数|人数|条数|配置数|事件数|触发数|仓位数/.test(label)) {
+        return '手动输入，仅支持整数，不可输入小数';
+      }
+      if (/价格|单价|均价|金额|盈利|保证金|余额|充值|提现|数量/.test(label)) {
+        return '手动输入，小数点位数跟随平台后端返回，页面截取处理';
+      }
+      if (fieldType === 'number') {
+        return '手动输入，校验规则随页面当前状态动态变化，根据当前状态限制输入数值大小，页面按当前口径展示结果处理';
+      }
+      if (field.tagName.toLowerCase() === 'textarea') {
+        return '手动输入，按当前页面填写规则校验，根据当前状态限制输入内容，不可为空';
+      }
+      return '手动输入，按当前页面填写规则校验，根据当前状态限制输入内容，不可为空';
+    }
+
+    function getOverlayInputRuleItems(overlay) {
+      if (!overlay) return [];
+      const contentRoot = overlay.querySelector('.modal-panel, .config-panel');
+      if (!contentRoot) return [];
+      const fields = Array.from(contentRoot.querySelectorAll('input[type="text"], input[type="number"], textarea'))
+        .filter(field => !field.closest('.modal-spec-panel'))
+        .filter(field => field.type !== 'hidden')
+        .filter(field => !field.disabled && !field.readOnly);
+      const seen = new Set();
+      const items = [];
+      fields.forEach(field => {
+        const label = getFieldLabelText(field);
+        if (!label || seen.has(label)) return;
+        seen.add(label);
+        items.push(`${items.length + 1}：${label}：${getInputRuleDescription(label, field)}`);
+      });
+      return items;
+    }
+
+    function createInputRuleCard(overlay, pageId) {
+      const ruleItems = getOverlayInputRuleItems(overlay, pageId);
+      if (!ruleItems.length) return null;
+      const card = document.createElement('div');
+      card.className = 'spec-card spec-card--supplement';
+      const title = document.createElement('strong');
+      title.textContent = '输入框输入规则';
+      card.appendChild(title);
+      ruleItems.forEach(text => {
+        card.appendChild(createTemplateLine(text));
+      });
+      return card;
+    }
+
+    function createOverlayFieldCard(overlay) {
+      if (!overlay) return null;
+      const contentRoot = overlay.querySelector('.modal-panel, .config-panel');
+      if (!contentRoot) return null;
+      const items = [];
+      const seen = new Set();
+      Array.from(contentRoot.querySelectorAll('.modal-field, .config-row')).forEach(row => {
+        if (row.closest('.modal-spec-panel')) return;
+        const labelNode = row.querySelector('label');
+        const label = labelNode ? labelNode.textContent.replace(/\s+/g, ' ').trim() : '';
+        if (!label || seen.has(label)) return;
+        seen.add(label);
+        const field = row.querySelector('input, select, textarea');
+        if (!field) return;
+        const tagName = field.tagName.toLowerCase();
+        const isReadOnly = !!field.readOnly || !!field.disabled;
+        if (tagName === 'select') {
+          items.push(`${items.length + 1}：${label}：当前弹窗下拉选择项，按当前选项执行对应处理`);
+          return;
+        }
+        if (isReadOnly) {
+          items.push(`${items.length + 1}：${label}：当前弹窗只读展示项，以当前弹窗展示内容为准`);
+          return;
+        }
+        items.push(`${items.length + 1}：${label}：当前弹窗录入项，按当前弹窗填写与校验规则处理`);
+      });
+      return createSimpleSupplementCard('弹窗字段口径', items);
+    }
+
+    function createOverlayActionCard(overlay) {
+      if (!overlay) return null;
+      const labels = new Set();
+      Array.from(overlay.querySelectorAll('.modal-close, .config-actions .button, .modal-actions .button, .inline-input-button, .button'))
+        .forEach(button => {
+          if (button.closest('.modal-spec-panel')) return;
+          const text = button.textContent.replace(/\s+/g, ' ').trim();
+          if (!text || text === '口径定义' || text === '收起' || text === '获取验证码') return;
+          labels.add(text);
+        });
+      const items = Array.from(labels).map((label, index) => `${index + 1}：${label}：${describeActionRule(label)}`);
+      return createSimpleSupplementCard('弹窗操作按钮', items);
+    }
+
+    function getOverlayTitleText(overlay) {
+      if (!overlay) return '';
+      const title = overlay.querySelector('.modal-head h3, .config-panel h2');
+      return title ? title.textContent.replace(/\s+/g, ' ').trim() : '';
+    }
+
+    function resolveOverlaySpecPageId(pageId, overlay) {
+      if (!overlay || !overlay.id) return pageId;
+      if (overlay.id === 'same-user-config-modal') {
+        const titleText = getOverlayTitleText(overlay);
+        if (titleText.includes('同提币地址配置')) return 'modal-withdraw-address-config';
+        if (titleText.includes('羊毛党配置')) return 'modal-wool-config';
+        if (titleText.includes('高频短时持仓配置')) return 'modal-short-hold-config';
+        if (titleText.includes('相关操作配置')) return 'modal-related-action-config';
+      }
+      return pageId;
+    }
+
+    function getOverlayStaticSpecCards(pageId, overlay) {
+      const resolvedPageId = resolveOverlaySpecPageId(pageId, overlay);
+      const page = specPages.find(item => item.dataset.specPage === resolvedPageId);
+      if (!page) return [];
+      const cards = Array.from(page.querySelectorAll('.spec-card:not(.spec-card--supplement)'));
+      const titleText = getOverlayTitleText(overlay);
+      if (!titleText) return cards;
+      const matchedCards = cards.filter(card => {
+        const title = card.querySelector('strong');
+        const text = title ? title.textContent.replace(/\s+/g, ' ').trim() : '';
+        return text && text.includes(titleText);
+      });
+      return matchedCards.length ? matchedCards : cards;
+    }
+
+    function normalizeStaticSpecCards() {
+      specPages.forEach(page => {
+        const pageId = page.dataset.specPage;
+        if (isModalSpecPage(pageId)) return;
+        Array.from(page.querySelectorAll('.spec-card:not(.spec-card--supplement)')).forEach(card => {
+          const titleNode = card.querySelector('strong');
+          const rawTitle = titleNode ? titleNode.textContent.trim() : '当前页面';
+          const rawLines = Array.from(card.querySelectorAll('ol li')).map(item => sanitizeBusinessSpecText(item.textContent.trim())).filter(Boolean);
+          const newCard = buildFixedFormatCard(pageId, rawTitle, rawLines);
+          newCard.classList.remove('spec-card--supplement');
+          card.replaceWith(newCard);
+        });
+      });
+    }
+
+    function ensureOverlaySpecPanel(overlay) {
+      if (!overlay) return null;
+      let panel = overlay.querySelector('.modal-spec-panel');
+      if (panel) return panel;
+      panel = document.createElement('aside');
+      panel.className = 'modal-spec-panel';
+      panel.hidden = true;
+      panel.innerHTML = `
+        <div class="modal-spec-panel__head">
+          <strong>口径定义</strong>
+          <button type="button" class="button secondary js-close-modal-spec-panel">收起</button>
+        </div>
+        <div class="modal-spec-panel__body"></div>
+      `;
+      overlay.appendChild(panel);
+      return panel;
+    }
+
+    function closeOverlaySpecPanel(overlayOrId) {
+      const overlay = typeof overlayOrId === 'string' ? document.getElementById(overlayOrId) : overlayOrId;
+      if (!overlay) return;
+      const panel = overlay.querySelector('.modal-spec-panel');
+      if (panel) {
+        panel.hidden = true;
+      }
+      overlay.classList.remove('modal-overlay--with-spec');
+    }
+
+    function renderOverlaySpecPanel(pageId, overlayId) {
+      const overlay = document.getElementById(overlayId);
+      if (!overlay) return;
+      const panel = ensureOverlaySpecPanel(overlay);
+      if (!panel) return;
+      const body = panel.querySelector('.modal-spec-panel__body');
+      if (!body) return;
+      body.innerHTML = '';
+      if (overlay.classList.contains('inline-entry-modal')) {
+        const fieldCard = createOverlayFieldCard(overlay);
+        if (fieldCard) body.appendChild(fieldCard);
+      } else {
+        getOverlayStaticSpecCards(pageId, overlay).forEach(card => {
+          body.appendChild(card.cloneNode(true));
+        });
+      }
+      const inputRuleCard = createInputRuleCard(overlay, pageId);
+      if (inputRuleCard) body.appendChild(inputRuleCard);
+      const actionCard = createOverlayActionCard(overlay);
+      if (actionCard) body.appendChild(actionCard);
+      panel.hidden = false;
+      overlay.classList.add('modal-overlay--with-spec');
+      requestAnimationFrame(() => {
+        body.scrollTo({ top: 0, behavior: 'auto' });
+        panel.scrollTo({ top: 0, behavior: 'auto' });
+      });
+    }
+
+    function openContextSpec(pageId, options = {}) {
+      if (options.overlayId) {
+        renderOverlaySpecPanel(pageId, options.overlayId);
+        return;
+      }
+      if (!pageId) return;
+      activateSpec(pageId);
+      setSpecCollapsed(false);
+      requestAnimationFrame(() => {
+        specSidebar.scrollTo({ top: 0, behavior: 'auto' });
+      });
+    }
+
+    function buildContextSpecTrigger(targetPageId, options = {}) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'button secondary spec-context-trigger';
+      button.textContent = '口径定义';
+      button.dataset.specTarget = targetPageId;
+      if (options.overlayId) button.dataset.specOverlay = options.overlayId;
+      button.addEventListener('click', () => openContextSpec(targetPageId, options));
+      return button;
+    }
+
+    function ensurePageSpecTriggers() {
+      document.querySelectorAll('.page .page-tools').forEach(tools => {
+        if (tools.querySelector('.spec-context-trigger')) return;
+        const page = tools.closest('.page');
+        if (!page || !page.id) return;
+        const group = tools.querySelector('.button-group') || tools;
+        group.appendChild(buildContextSpecTrigger(page.id));
+      });
+    }
+
+    function ensureSectionHeadSpecTriggers() {
+      document.querySelectorAll('.page .section-head').forEach(head => {
+        if (head.querySelector('.spec-context-trigger')) return;
+        const page = head.closest('.page');
+        if (!page || !page.id) return;
+        if (head.querySelector('.page-tools')) return;
+        let group = head.querySelector('.button-group');
+        if (!group) {
+          group = document.createElement('div');
+          group.className = 'button-group';
+          head.appendChild(group);
+        }
+        group.appendChild(buildContextSpecTrigger(page.id));
+      });
+    }
+
+    function ensureModalSpecTriggers() {
+      const modalSpecMap = {
+        'manual-adl-modal': 'modal-manual-adl',
+        'same-user-config-modal': 'modal-same-user',
+        'permission-modal': 'modal-permission',
+        'batch-register-rule-modal': 'modal-batch-register',
+        'risk-global-limit-modal': 'modal-risk-limit',
+        'auto-join-rules-modal': 'modal-auto-join-rules',
+        'monitor-status-modal': 'modal-monitor-status',
+        'rule-config-modal': 'modal-rule-config',
+        'whitelist-events-modal': 'modal-whitelist-events'
+      };
+      Object.entries(modalSpecMap).forEach(([modalId, targetPageId]) => {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+        const head = modal.querySelector('.modal-head');
+        if (!head || head.querySelector('.spec-context-trigger')) return;
+        const closeButton = head.querySelector('.modal-close');
+        const actionWrap = document.createElement('div');
+        actionWrap.className = 'modal-head-actions';
+        actionWrap.appendChild(buildContextSpecTrigger(targetPageId, { overlayId: modalId }));
+        if (closeButton) {
+          closeButton.parentNode.removeChild(closeButton);
+          actionWrap.appendChild(closeButton);
+        }
+        head.appendChild(actionWrap);
+      });
+    }
+
+    function ensureInlineModalSpecTriggers() {
+      const inlineModalSpecMap = {
+        'whitelist-add-modal': 'whitelist-monitor',
+        'risk-email-suffix-form-block': 'risk-email-suffix',
+        'risk-ip-form-block': 'risk-ip-whitelist',
+        'risk-device-form-block': 'risk-device-whitelist',
+        'risk-withdraw-form-block': 'risk-withdraw-whitelist',
+        'risk-password-whitelist-form-block': 'risk-password-whitelist'
+      };
+      Object.entries(inlineModalSpecMap).forEach(([modalId, targetPageId]) => {
+        const panel = document.querySelector(`#${modalId} .config-panel`);
+        if (!panel || panel.querySelector('.inline-spec-entry')) return;
+        const title = panel.querySelector('h2');
+        if (!title) return;
+        const row = document.createElement('div');
+        row.className = 'inline-spec-entry';
+        const clonedTitle = title.cloneNode(true);
+        row.appendChild(clonedTitle);
+        row.appendChild(buildContextSpecTrigger(targetPageId, { overlayId: modalId }));
+        title.replaceWith(row);
       });
     }
 
@@ -8086,6 +8853,11 @@
       specToggle.classList.toggle('expanded', !collapsed);
       specToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
       specToggleHint.textContent = collapsed ? '点击展开' : '点击收回';
+      if (!collapsed) {
+        requestAnimationFrame(() => {
+          specSidebar.scrollTo({ top: 0, behavior: 'auto' });
+        });
+      }
     }
 
     function activate(pageId) {
@@ -8217,6 +8989,7 @@
       if (!manualAdlModal) return;
       manualAdlModal.classList.toggle('open', open);
       manualAdlModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (!open) closeOverlaySpecPanel(manualAdlModal);
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
@@ -8224,6 +8997,7 @@
       if (!sameUserConfigModal) return;
       sameUserConfigModal.classList.toggle('open', open);
       sameUserConfigModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (!open) closeOverlaySpecPanel(sameUserConfigModal);
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
@@ -8231,6 +9005,7 @@
       if (!permissionModal) return;
       permissionModal.classList.toggle('open', open);
       permissionModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (!open) closeOverlaySpecPanel(permissionModal);
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
@@ -8238,6 +9013,7 @@
       if (!batchRegisterRuleModal) return;
       batchRegisterRuleModal.classList.toggle('open', open);
       batchRegisterRuleModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (!open) closeOverlaySpecPanel(batchRegisterRuleModal);
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
@@ -8245,6 +9021,7 @@
       if (!riskGlobalLimitModal) return;
       riskGlobalLimitModal.classList.toggle('open', open);
       riskGlobalLimitModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (!open) closeOverlaySpecPanel(riskGlobalLimitModal);
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
@@ -8260,6 +9037,7 @@
       if (!autoJoinRulesModal) return;
       autoJoinRulesModal.classList.toggle('open', open);
       autoJoinRulesModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (!open) closeOverlaySpecPanel(autoJoinRulesModal);
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
@@ -8319,6 +9097,7 @@
       if (!monitorStatusModal) return;
       monitorStatusModal.classList.toggle('open', open);
       monitorStatusModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (!open) closeOverlaySpecPanel(monitorStatusModal);
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
@@ -8327,6 +9106,7 @@
       ruleConfigModal.classList.toggle('open', open);
       ruleConfigModal.setAttribute('aria-hidden', open ? 'false' : 'true');
       if (!open && ruleConfigModalBody) ruleConfigModalBody.innerHTML = '';
+      if (!open) closeOverlaySpecPanel(ruleConfigModal);
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
@@ -8357,6 +9137,7 @@
       if (!whitelistEventsModal) return;
       whitelistEventsModal.classList.toggle('open', open);
       whitelistEventsModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (!open) closeOverlaySpecPanel(whitelistEventsModal);
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
@@ -9018,6 +9799,7 @@
     inlineEntryModals.forEach(modal => {
       modal.addEventListener('click', event => {
         if (event.target !== modal) return;
+        closeOverlaySpecPanel(modal);
         modal.hidden = true;
         document.body.style.overflow = '';
         const trigger = document.querySelector(`.js-toggle-config[data-target="${modal.id}"]`);
@@ -9026,10 +9808,17 @@
     });
 
     document.addEventListener('click', event => {
+      const closeSpecButton = event.target.closest('.js-close-modal-spec-panel');
+      if (closeSpecButton) {
+        const overlay = closeSpecButton.closest('.modal-overlay, .inline-entry-modal');
+        if (overlay) closeOverlaySpecPanel(overlay);
+        return;
+      }
       const closeButton = event.target.closest('.js-close-inline-entry-modal');
       if (!closeButton) return;
       const modal = closeButton.closest('.inline-entry-modal');
       if (!modal) return;
+      closeOverlaySpecPanel(modal);
       modal.hidden = true;
       document.body.style.overflow = '';
       const trigger = document.querySelector(`.js-toggle-config[data-target="${modal.id}"]`);
@@ -9277,6 +10066,7 @@
         setRuleConfigModalOpen(false);
         setWhitelistEventsModalOpen(false);
         inlineEntryModals.forEach(modal => {
+          closeOverlaySpecPanel(modal);
           modal.hidden = true;
           const trigger = document.querySelector(`.js-toggle-config[data-target="${modal.id}"]`);
           if (trigger) syncConfigToggle(trigger);
@@ -9288,7 +10078,10 @@
       setSpecCollapsed(!specSidebar.classList.contains('collapsed'));
     });
 
+    normalizeStaticSpecCards();
     renderSupplementSpecCards();
+    ensureModalSpecTriggers();
+    ensureInlineModalSpecTriggers();
     renderOverview();
     setSpecCollapsed(true);
     activate('monitor');

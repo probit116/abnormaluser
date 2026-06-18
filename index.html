@@ -1463,7 +1463,7 @@
     <aside class="sidebar">
       <div class="eyebrow">监控 · 原型</div>
       <h1>异常用户监控</h1>
-      <p>单文件 HTML 原型：包含异常用户列表、可疑用户限制规则、黑名单合约下单与强平规则配置与风控用户监控页面。可本地直接打开并演示筛选、分页、弹窗与页面切换。</p>
+      <p>单文件 HTML 原型：包含可疑用户、黑白名单、事前预警、事后报警等多分组页面。可本地直接打开并演示筛选、分页、弹窗与页面切换。</p>
 
       <div class="nav-list">
         <div class="nav-group open active" data-group="suspicious" data-pages="monitor">
@@ -1483,7 +1483,7 @@
             </button>
           </div>
         </div>
-        <div class="nav-group" data-group="blacklist" data-pages="blacklist-monitor,blacklist-ip,blacklist-device,blacklist-withdraw,blacklist-password,blacklist-phone,limit,blacklist-market-history,blacklist-limit-history,blacklist-add">
+        <div class="nav-group" data-group="blacklist" data-pages="blacklist-monitor,blacklist-liquidation-history,blacklist-ip,blacklist-device,blacklist-withdraw,blacklist-password,blacklist-phone,limit,blacklist-market-history,blacklist-limit-history,blacklist-add">
           <div class="nav-parent">
             <button class="nav-btn group-title" data-page="blacklist-monitor">
               <span class="nav-copy">
@@ -1497,6 +1497,10 @@
             <button class="nav-btn sub" data-page="blacklist-monitor">
               <strong>黑名单用户</strong>
               <span>黑名单用户列表管理</span>
+            </button>
+            <button class="nav-btn sub" data-page="blacklist-liquidation-history">
+              <strong>黑名单强平仓列表</strong>
+              <span>黑名单强平仓记录</span>
             </button>
             <button class="nav-btn sub" data-page="limit">
               <strong>黑名单合约下单与强平规则配置</strong>
@@ -1531,8 +1535,8 @@
               <span>登录密码与支付密码黑名单管理</span>
             </button>
             <button class="nav-btn sub" data-page="blacklist-phone">
-              <strong>手机号码黑名单</strong>
-              <span>手机号黑名单与国家控制</span>
+              <strong>邮箱黑名单</strong>
+              <span>邮箱黑名单与域名控制</span>
             </button>
           </div>
         </div>
@@ -1573,20 +1577,20 @@
             </button>
           </div>
         </div>
-        <div class="nav-group" style="margin-top:12px;" data-group="risk" data-pages="risk-contract-suspicious-monitor,market-history,limit-history,risk-login,risk-batch-register,risk-short-hold,risk-same-second-open,risk-withdraw-address-monitor,risk-wool-monitor,risk-abnormal-deposit-monitor,risk-password-monitor,risk-password-detail,risk-password-config,risk-trade-peer-monitor,risk-trade-peer-detail,risk-handle-record,risk-handle-record-detail">
+        <div class="nav-group" style="margin-top:12px;" data-group="pre-warning" data-pages="risk-large-position-monitor,risk-login,risk-batch-register,risk-withdraw-address-monitor,risk-deposit-address-monitor,risk-internal-transfer-monitor,risk-abnormal-deposit-monitor,risk-large-transfer-monitor,risk-cumulative-withdraw-monitor,risk-password-monitor,risk-password-detail,risk-password-config">
           <div class="nav-parent">
-            <button class="nav-btn group-title" data-page="risk-login">
+            <button class="nav-btn group-title" data-page="risk-large-position-monitor">
               <span class="nav-copy">
-                <strong>风控</strong>
-                <span>异常登录、批量注册、羊毛党与交易风控</span>
+                <strong>事前预警</strong>
+                <span>入金、地址、登录、密码与大额行为预警</span>
               </span>
             </button>
-            <button type="button" class="nav-group-toggle" data-group-toggle="risk" aria-label="展开或收回风控用户导航"></button>
+            <button type="button" class="nav-group-toggle" data-group-toggle="pre-warning" aria-label="展开或收回事前预警导航"></button>
           </div>
           <div class="nav-sub-list">
-            <button class="nav-btn sub" data-page="risk-contract-suspicious-monitor">
-              <strong>合约可疑用户</strong>
-              <span>合约可疑用户监控列表</span>
+            <button class="nav-btn sub" data-page="risk-large-position-monitor">
+              <strong>大额持仓监控</strong>
+              <span>按持仓名义价值与盈利率预警</span>
             </button>
             <button class="nav-btn sub" data-page="risk-login">
               <strong>异常登录监控</strong>
@@ -1606,23 +1610,72 @@
             </button>
             <button class="nav-btn sub" data-page="risk-withdraw-address-monitor">
               <strong>同提币地址监控</strong>
-              <span>同提币地址事件监控</span>
+              <span>同提币地址聚合预警</span>
             </button>
-            <button class="nav-btn sub" data-page="risk-wool-monitor">
-              <strong>羊毛党监控</strong>
-              <span>充值提现异常与羊毛党识别</span>
+            <button class="nav-btn sub" data-page="risk-deposit-address-monitor">
+              <strong>同充值地址监控</strong>
+              <span>同充值地址聚合预警</span>
+            </button>
+            <button class="nav-btn sub" data-page="risk-internal-transfer-monitor">
+              <strong>同uid内部划转监控</strong>
+              <span>同内部账号聚合提现预警</span>
             </button>
             <button class="nav-btn sub" data-page="risk-abnormal-deposit-monitor">
               <strong>异常充值监控</strong>
               <span>异常充值与快进快出行为识别</span>
             </button>
+            <button class="nav-btn sub" data-page="risk-large-transfer-monitor">
+              <strong>大额出入金监控</strong>
+              <span>单笔大额出入金预警</span>
+            </button>
+            <button class="nav-btn sub" data-page="risk-cumulative-withdraw-monitor">
+              <strong>累计出金超过入金监控</strong>
+              <span>累计出金超入金预警</span>
+            </button>
             <button class="nav-btn sub" data-page="risk-password-monitor">
               <strong>用户同密码</strong>
               <span>同登录密码与支付密码关联监控</span>
             </button>
+          </div>
+        </div>
+        <div class="nav-group" style="margin-top:12px;" data-group="post-alert" data-pages="risk-contract-suspicious-monitor,market-history,limit-history,risk-short-hold,risk-same-second-open,risk-wool-monitor,risk-trade-peer-monitor,risk-trade-peer-detail,risk-small-coin-monitor,risk-order-brush-monitor,risk-handle-record,risk-handle-record-detail">
+          <div class="nav-parent">
+            <button class="nav-btn group-title" data-page="risk-contract-suspicious-monitor">
+              <span class="nav-copy">
+                <strong>事后报警</strong>
+                <span>高盈利、高胜率、对敲与仓位行为报警</span>
+              </span>
+            </button>
+            <button type="button" class="nav-group-toggle" data-group-toggle="post-alert" aria-label="展开或收回事后报警导航"></button>
+          </div>
+          <div class="nav-sub-list">
+            <button class="nav-btn sub" data-page="risk-contract-suspicious-monitor">
+              <strong>高盈利高胜率用户</strong>
+              <span>高盈利高胜率用户监控列表</span>
+            </button>
+            <button class="nav-btn sub" data-page="risk-short-hold">
+              <strong>高频短时持仓监控</strong>
+              <span>推仓位类短持仓报警</span>
+            </button>
+            <button class="nav-btn sub" data-page="risk-same-second-open">
+              <strong>同秒开仓监控</strong>
+              <span>推仓位类同秒开仓，过滤跟单交易</span>
+            </button>
+            <button class="nav-btn sub" data-page="risk-wool-monitor">
+              <strong>羊毛党监控</strong>
+              <span>福利套利与代理异常报警</span>
+            </button>
             <button class="nav-btn sub" data-page="risk-trade-peer-monitor">
-              <strong>交易同用户风控</strong>
-              <span>同交易对手高频交易风控监控</span>
+              <strong>对敲交易监控</strong>
+              <span>推仓位类对敲交易识别</span>
+            </button>
+            <button class="nav-btn sub" data-page="risk-small-coin-monitor">
+              <strong>小币种风控</strong>
+              <span>小币种同杠杆持仓异常识别</span>
+            </button>
+            <button class="nav-btn sub" data-page="risk-order-brush-monitor">
+              <strong>打单风控</strong>
+              <span>同仓位加减仓频繁操作识别</span>
             </button>
             <button class="nav-btn sub" data-page="risk-handle-record">
               <strong>处理记录</strong>
@@ -2180,6 +2233,145 @@
         </div>
       </section>
 
+      <section id="blacklist-liquidation-history" class="page">
+        <div class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="breadcrumb">
+                <span>后台</span><span>›</span><span>黑名单</span><span>›</span><span class="text-primary">黑名单强平仓列表</span>
+              </div>
+              <h3>黑名单强平仓列表</h3>
+            </div>
+            <div class="button-group">
+              <button type="button" class="button secondary" id="back-from-blacklist-liquidation-history">返回黑名单用户</button>
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <div class="field-item">
+              <label>订单号:</label>
+              <input type="text" placeholder="请输入订单号">
+            </div>
+            <div class="field-item">
+              <label>用户UID:</label>
+              <input type="text" placeholder="请输入用户UID">
+            </div>
+            <div class="field-item">
+              <label>交易对:</label>
+              <select>
+                <option>全部</option>
+                <option>BTC永续</option>
+                <option>ETH永续</option>
+                <option>BNB永续</option>
+                <option>XRP永续</option>
+              </select>
+            </div>
+            <div class="field-item">
+              <label>方向:</label>
+              <select>
+                <option>全部</option>
+                <option>做多</option>
+                <option>做空</option>
+              </select>
+            </div>
+            <div class="field-item">
+              <label>状态:</label>
+              <select>
+                <option>全部</option>
+                <option>强平成功</option>
+                <option>部分强平</option>
+                <option>强平中</option>
+              </select>
+            </div>
+            <div class="field-item">
+              <label>开仓时间:</label>
+              <input type="datetime-local">
+            </div>
+            <div class="field-item">
+              <label>开仓结束时间:</label>
+              <input type="datetime-local">
+            </div>
+            <div class="field-item">
+              <label>最近更新时间:</label>
+              <input type="datetime-local">
+            </div>
+            <div class="field-item">
+              <label>更新时间结束:</label>
+              <input type="datetime-local">
+            </div>
+            <div class="field-item">
+              <button type="button" class="button">查询</button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>用户UID</th>
+                  <th>合约交易对</th>
+                  <th>方向</th>
+                  <th>持仓数量</th>
+                  <th>开仓均价</th>
+                  <th>平仓均价</th>
+                  <th>已实现盈亏</th>
+                  <th>盈利率</th>
+                  <th>开仓时间</th>
+                  <th>最近更新时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>UID123456</td>
+                  <td>ETH永续</td>
+                  <td>做空</td>
+                  <td>2</td>
+                  <td>3200</td>
+                  <td>3000</td>
+                  <td>400</td>
+                  <td>6.25%</td>
+                  <td>2026-03-30 15:00:00</td>
+                  <td>2026-03-31 09:15:00</td>
+                  <td><a href="#" class="action-link">对应订单详情</a></td>
+                </tr>
+                <tr>
+                  <td>UID789012</td>
+                  <td>BTC永续</td>
+                  <td>做多</td>
+                  <td>1</td>
+                  <td>44000</td>
+                  <td>45000</td>
+                  <td>1000</td>
+                  <td>2.27%</td>
+                  <td>2026-03-30 14:00:00</td>
+                  <td>2026-03-31 08:30:00</td>
+                  <td><a href="#" class="action-link">对应订单详情</a></td>
+                </tr>
+                <tr>
+                  <td>UID345678</td>
+                  <td>BNB永续</td>
+                  <td>做空</td>
+                  <td>3</td>
+                  <td>310</td>
+                  <td>300</td>
+                  <td>30</td>
+                  <td>3.23%</td>
+                  <td>2026-03-30 13:00:00</td>
+                  <td>2026-03-31 07:45:00</td>
+                  <td><a href="#" class="action-link">对应订单详情</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="padding:16px; border-top:1px solid rgba(148,163,184,.08);">
+            <p style="font-size:12px; color:var(--muted);">1: 按最近更新时间倒序排列</p>
+            <p style="font-size:12px; color:var(--muted);">2: 点击对应订单详情跳转订单详情页</p>
+          </div>
+        </div>
+      </section>
+
       <section id="blacklist-add" class="page">
         <div class="section-card">
           <div class="section-head">
@@ -2224,8 +2416,7 @@
               <h3>IP黑名单</h3>
             </div>
             <div class="button-group">
-              <button type="button" class="button secondary js-open-user-config" data-user-uid="200.35.52.48" data-related-users="200.35.52.48" data-relation-default="0" data-config-source="IP黑名单">用户控制配置</button>
-              <button type="button" class="button secondary config-toggle-button js-toggle-config" id="go-blacklist-ip-form" data-target="blacklist-ip-form-block" data-closed-text="添加IP黑名单" data-open-text="关闭" aria-expanded="false">添加IP黑名单</button>
+              <button type="button" class="button secondary config-toggle-button js-toggle-config js-open-blacklist-entry-editor" id="go-blacklist-ip-form" data-target="blacklist-ip-form-block" data-entry-mode="create" data-closed-text="添加/编辑IP黑名单" data-open-text="关闭" aria-expanded="false">添加/编辑IP黑名单</button>
             </div>
           </div>
           <div class="field-grid">
@@ -2260,14 +2451,17 @@
                   <td>200.35.52.48</td>
                   <td>异常登录命中后人工转入IP黑名单</td>
                   <td>2025-07-16 10:12:26</td>
-                  <td><a href="#" class="action-link">删除</a></td>
+                  <td>
+                    <a href="#" class="action-link js-open-blacklist-entry-editor" data-target="blacklist-ip-form-block" data-entry-mode="edit" data-ip-mode="ip" data-ip-value="200.35.52.48" data-reason="异常登录命中后人工转入IP黑名单">编辑</a>
+                    <a href="#" class="action-link">删除</a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="risk-layout collapsible-config inline-entry-modal" id="blacklist-ip-form-block" hidden>
             <div class="config-panel" id="blacklist-ip-form">
-              <h2>新增IP黑名单</h2>
+              <h2>添加/编辑IP黑名单</h2>
               <div class="config-row">
                 <label>控制方式</label>
                 <div class="checkbox-list">
@@ -2295,6 +2489,37 @@
                 <label>转入原因</label>
                 <input type="text" value="异常登录命中后人工转入IP黑名单" />
               </div>
+              <div class="config-desc">
+                <strong>用户控制配置</strong><br>
+                用于对当前黑名单对象执行单条用户控制处理，当前来源页为IP黑名单，本配置仅对当前对象生效。
+              </div>
+              <div class="modal-grid">
+                <div class="modal-field">
+                  <label>来源页面</label>
+                  <input type="text" value="IP黑名单" readonly />
+                </div>
+                <div class="modal-field">
+                  <label>当前对象</label>
+                  <input type="text" class="js-blacklist-inline-target" data-target-form="blacklist-ip-form" placeholder="根据上方录入内容自动带出" readonly />
+                </div>
+              </div>
+              <div class="modal-alert">勾选风控操作后，确认时按当前对象执行统一处理；如操作包含全部列入黑名单且对象命中白名单保护，仍需先进行白名单冲突确认。</div>
+              <div class="modal-field">
+                <label>风控操作</label>
+                <div class="modal-option-grid">
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止登录</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止注册</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止提现</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止现货交易</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止合约开仓</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">全部列入可疑用户</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">全部列入黑名单</label>
+                </div>
+              </div>
+              <div class="config-row">
+                <label>备注</label>
+                <input type="text" class="js-blacklist-inline-remark" placeholder="请输入统一处理说明" />
+              </div>
               <div class="config-actions">
                 <button type="button" class="button secondary js-close-inline-entry-modal">取消</button>
                 <button type="button" class="button">确认</button>
@@ -2314,8 +2539,7 @@
               <h3>设备黑名单</h3>
             </div>
             <div class="button-group">
-              <button type="button" class="button secondary js-open-user-config" data-user-uid="dev-8F2A-31C9" data-related-users="dev-8F2A-31C9" data-relation-default="0" data-config-source="设备黑名单">用户控制配置</button>
-              <button type="button" class="button secondary config-toggle-button js-toggle-config" id="go-blacklist-device-form" data-target="blacklist-device-form-block" data-closed-text="添加设备黑名单" data-open-text="关闭" aria-expanded="false">添加设备黑名单</button>
+              <button type="button" class="button secondary config-toggle-button js-toggle-config js-open-blacklist-entry-editor" id="go-blacklist-device-form" data-target="blacklist-device-form-block" data-entry-mode="create" data-closed-text="添加/编辑设备黑名单" data-open-text="关闭" aria-expanded="false">添加/编辑设备黑名单</button>
             </div>
           </div>
           <div class="field-grid">
@@ -2353,14 +2577,17 @@
                   <td>WEB</td>
                   <td>批量注册监控命中后人工转入设备黑名单</td>
                   <td>2025-07-16 11:02:40</td>
-                  <td><a href="#" class="action-link">删除</a></td>
+                  <td>
+                    <a href="#" class="action-link js-open-blacklist-entry-editor" data-target="blacklist-device-form-block" data-entry-mode="edit" data-device-value="dev-8F2A-31C9" data-device-type="WEB" data-reason="批量注册监控命中后人工转入设备黑名单">编辑</a>
+                    <a href="#" class="action-link">删除</a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="risk-layout collapsible-config inline-entry-modal" id="blacklist-device-form-block" hidden>
             <div class="config-panel" id="blacklist-device-form">
-              <h2>新增设备黑名单</h2>
+              <h2>添加/编辑设备黑名单</h2>
               <div class="config-row">
                 <label>输入设备ID</label>
                 <textarea placeholder="多个设备ID用 / 隔开，例如：dev-8F2A-31C9/dev-0A7D-52EE">dev-8F2A-31C9/dev-0A7D-52EE</textarea>
@@ -2377,6 +2604,37 @@
               <div class="config-row">
                 <label>转入原因</label>
                 <input type="text" value="批量注册监控命中后人工转入设备黑名单" />
+              </div>
+              <div class="config-desc">
+                <strong>用户控制配置</strong><br>
+                用于对当前黑名单对象执行单条用户控制处理，当前来源页为设备黑名单，本配置仅对当前对象生效。
+              </div>
+              <div class="modal-grid">
+                <div class="modal-field">
+                  <label>来源页面</label>
+                  <input type="text" value="设备黑名单" readonly />
+                </div>
+                <div class="modal-field">
+                  <label>当前对象</label>
+                  <input type="text" class="js-blacklist-inline-target" data-target-form="blacklist-device-form" placeholder="根据上方录入内容自动带出" readonly />
+                </div>
+              </div>
+              <div class="modal-alert">勾选风控操作后，确认时按当前对象执行统一处理；如操作包含全部列入黑名单且对象命中白名单保护，仍需先进行白名单冲突确认。</div>
+              <div class="modal-field">
+                <label>风控操作</label>
+                <div class="modal-option-grid">
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止登录</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止注册</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止提现</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止现货交易</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止合约开仓</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">全部列入可疑用户</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">全部列入黑名单</label>
+                </div>
+              </div>
+              <div class="config-row">
+                <label>备注</label>
+                <input type="text" class="js-blacklist-inline-remark" placeholder="请输入统一处理说明" />
               </div>
               <div class="config-actions">
                 <button type="button" class="button secondary js-close-inline-entry-modal">取消</button>
@@ -2397,8 +2655,7 @@
               <h3>提币地址黑名单</h3>
             </div>
             <div class="button-group">
-              <button type="button" class="button secondary js-open-user-config" data-user-uid="TQ2a9xY8mP01cUSDT9981" data-related-users="TQ2a9xY8mP01cUSDT9981" data-relation-default="0" data-config-source="提币地址黑名单">用户控制配置</button>
-              <button type="button" class="button secondary config-toggle-button js-toggle-config" id="go-blacklist-withdraw-form" data-target="blacklist-withdraw-form-block" data-closed-text="添加提币地址黑名单" data-open-text="关闭" aria-expanded="false">添加提币地址黑名单</button>
+              <button type="button" class="button secondary config-toggle-button js-toggle-config js-open-blacklist-entry-editor" id="go-blacklist-withdraw-form" data-target="blacklist-withdraw-form-block" data-entry-mode="create" data-closed-text="添加/编辑提币地址黑名单" data-open-text="关闭" aria-expanded="false">添加/编辑提币地址黑名单</button>
             </div>
           </div>
           <div class="field-grid">
@@ -2433,14 +2690,17 @@
                   <td>TQ2a9xY8mP01cUSDT9981</td>
                   <td>同提币地址监控命中后人工转入地址黑名单</td>
                   <td>2025-07-16 09:28:10</td>
-                  <td><a href="#" class="action-link">删除</a></td>
+                  <td>
+                    <a href="#" class="action-link js-open-blacklist-entry-editor" data-target="blacklist-withdraw-form-block" data-entry-mode="edit" data-withdraw-value="TQ2a9xY8mP01cUSDT9981" data-reason="同提币地址监控命中后人工转入地址黑名单">编辑</a>
+                    <a href="#" class="action-link">删除</a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="risk-layout collapsible-config inline-entry-modal" id="blacklist-withdraw-form-block" hidden>
             <div class="config-panel" id="blacklist-withdraw-form">
-              <h2>新增提币地址黑名单</h2>
+              <h2>添加/编辑提币地址黑名单</h2>
               <div class="config-row">
                 <label>输入提币地址</label>
                 <textarea placeholder="多个地址用 / 隔开，例如：TQ2a9xY8mP01cUSDT9981/0x7f31AE18c9F0008812">TQ2a9xY8mP01cUSDT9981/0x7f31AE18c9F0008812</textarea>
@@ -2449,6 +2709,37 @@
               <div class="config-row">
                 <label>转入原因</label>
                 <input type="text" value="同提币地址监控命中后人工转入地址黑名单" />
+              </div>
+              <div class="config-desc">
+                <strong>用户控制配置</strong><br>
+                用于对当前黑名单对象执行单条用户控制处理，当前来源页为提币地址黑名单，本配置仅对当前对象生效。
+              </div>
+              <div class="modal-grid">
+                <div class="modal-field">
+                  <label>来源页面</label>
+                  <input type="text" value="提币地址黑名单" readonly />
+                </div>
+                <div class="modal-field">
+                  <label>当前对象</label>
+                  <input type="text" class="js-blacklist-inline-target" data-target-form="blacklist-withdraw-form" placeholder="根据上方录入内容自动带出" readonly />
+                </div>
+              </div>
+              <div class="modal-alert">勾选风控操作后，确认时按当前对象执行统一处理；如操作包含全部列入黑名单且对象命中白名单保护，仍需先进行白名单冲突确认。</div>
+              <div class="modal-field">
+                <label>风控操作</label>
+                <div class="modal-option-grid">
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止登录</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止注册</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止提现</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止现货交易</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止合约开仓</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">全部列入可疑用户</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">全部列入黑名单</label>
+                </div>
+              </div>
+              <div class="config-row">
+                <label>备注</label>
+                <input type="text" class="js-blacklist-inline-remark" placeholder="请输入统一处理说明" />
               </div>
               <div class="config-actions">
                 <button type="button" class="button secondary js-close-inline-entry-modal">取消</button>
@@ -2469,8 +2760,7 @@
               <h3>密码黑名单</h3>
             </div>
             <div class="button-group">
-              <button type="button" class="button secondary js-open-user-config" data-user-uid="sha256:8f2e1a99bc***" data-related-users="sha256:8f2e1a99bc***" data-relation-default="0" data-config-source="密码黑名单">用户控制配置</button>
-              <button type="button" class="button secondary config-toggle-button js-toggle-config" id="go-blacklist-password-form" data-target="blacklist-password-form-block" data-closed-text="添加密码黑名单" data-open-text="关闭" aria-expanded="false">添加密码黑名单</button>
+              <button type="button" class="button secondary config-toggle-button js-toggle-config js-open-blacklist-entry-editor" id="go-blacklist-password-form" data-target="blacklist-password-form-block" data-entry-mode="create" data-closed-text="添加/编辑密码黑名单" data-open-text="关闭" aria-expanded="false">添加/编辑密码黑名单</button>
             </div>
           </div>
           <div class="field-grid">
@@ -2507,14 +2797,17 @@
                   <td>登录密码</td>
                   <td>用户同密码命中后人工转入密码黑名单</td>
                   <td>2025-07-16 09:28:10</td>
-                  <td><a href="#" class="action-link">删除</a></td>
+                  <td>
+                    <a href="#" class="action-link js-open-blacklist-entry-editor" data-target="blacklist-password-form-block" data-entry-mode="edit" data-password-value="sha256:8f2e1a99bc***" data-password-type="登录密码" data-reason="用户同密码命中后人工转入密码黑名单">编辑</a>
+                    <a href="#" class="action-link">删除</a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="risk-layout collapsible-config inline-entry-modal" id="blacklist-password-form-block" hidden>
             <div class="config-panel" id="blacklist-password-form">
-              <h2>新增密码黑名单</h2>
+              <h2>添加/编辑密码黑名单</h2>
               <div class="config-row">
                 <label>输入密码摘要</label>
                 <textarea placeholder="多个密码摘要用 / 隔开，例如：sha256:8f2e1a99bc***/sha256:4cd3ab10de***">sha256:8f2e1a99bc***/sha256:4cd3ab10de***</textarea>
@@ -2531,6 +2824,37 @@
                 <label>转入原因</label>
                 <input type="text" value="用户同密码命中后人工转入密码黑名单" />
               </div>
+              <div class="config-desc">
+                <strong>用户控制配置</strong><br>
+                用于对当前黑名单对象执行单条用户控制处理，当前来源页为密码黑名单，本配置仅对当前对象生效。
+              </div>
+              <div class="modal-grid">
+                <div class="modal-field">
+                  <label>来源页面</label>
+                  <input type="text" value="密码黑名单" readonly />
+                </div>
+                <div class="modal-field">
+                  <label>当前对象</label>
+                  <input type="text" class="js-blacklist-inline-target" data-target-form="blacklist-password-form" placeholder="根据上方录入内容自动带出" readonly />
+                </div>
+              </div>
+              <div class="modal-alert">勾选风控操作后，确认时按当前对象执行统一处理；如操作包含全部列入黑名单且对象命中白名单保护，仍需先进行白名单冲突确认。</div>
+              <div class="modal-field">
+                <label>风控操作</label>
+                <div class="modal-option-grid">
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止登录</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止注册</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止提现</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止现货交易</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止合约开仓</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">全部列入可疑用户</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">全部列入黑名单</label>
+                </div>
+              </div>
+              <div class="config-row">
+                <label>备注</label>
+                <input type="text" class="js-blacklist-inline-remark" placeholder="请输入统一处理说明" />
+              </div>
               <div class="config-actions">
                 <button type="button" class="button secondary js-close-inline-entry-modal">取消</button>
                 <button type="button" class="button">确认</button>
@@ -2545,25 +2869,25 @@
           <div class="section-head">
             <div>
               <div class="breadcrumb">
-                <span>后台</span><span>›</span><span>黑名单</span><span>›</span><span class="text-primary">手机号码黑名单</span>
+                <span>后台</span><span>›</span><span>黑名单</span><span>›</span><span class="text-primary">邮箱黑名单</span>
               </div>
-              <h3>手机号码黑名单</h3>
+              <h3>邮箱黑名单</h3>
             </div>
             <div class="button-group">
-              <button type="button" class="button secondary config-toggle-button js-toggle-config" id="go-blacklist-phone-form" data-target="blacklist-phone-form-block" data-closed-text="添加手机号码黑名单" data-open-text="关闭" aria-expanded="false">添加手机号码黑名单</button>
+              <button type="button" class="button secondary config-toggle-button js-toggle-config js-open-blacklist-entry-editor" id="go-blacklist-phone-form" data-target="blacklist-phone-form-block" data-entry-mode="create" data-closed-text="添加/编辑邮箱黑名单" data-open-text="关闭" aria-expanded="false">添加/编辑邮箱黑名单</button>
             </div>
           </div>
           <div class="field-grid">
             <div class="field">
               <label>查询条件</label>
-              <input type="text" placeholder="请输入手机号/国家" />
+              <input type="text" placeholder="请输入邮箱/域名" />
             </div>
             <div class="field">
               <label>类型</label>
               <select>
                 <option>全部</option>
-                <option>单个手机号</option>
-                <option>按国家控制</option>
+                <option>单个邮箱</option>
+                <option>邮箱域名</option>
               </select>
             </div>
             <div class="field field--actions">
@@ -2575,7 +2899,7 @@
               <thead>
                 <tr>
                   <th>类型</th>
-                  <th>手机号/国家</th>
+                  <th>邮箱/域名</th>
                   <th>转入原因</th>
                   <th>操作时间</th>
                   <th>操作</th>
@@ -2583,51 +2907,88 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>单个手机号</td>
-                  <td>+86 138****8899</td>
-                  <td>批量注册监控命中后人工转入手机号黑名单</td>
+                  <td>单个邮箱</td>
+                  <td>risk_user_01@gmail.com</td>
+                  <td>批量注册监控命中后人工转入邮箱黑名单</td>
                   <td>2025-07-16 09:28:10</td>
-                  <td><a href="#" class="action-link">删除</a></td>
+                  <td>
+                    <a href="#" class="action-link js-open-blacklist-entry-editor" data-target="blacklist-phone-form-block" data-entry-mode="edit" data-phone-mode="phone" data-phone-value="risk_user_01@gmail.com" data-reason="批量注册监控命中后人工转入邮箱黑名单">编辑</a>
+                    <a href="#" class="action-link">删除</a>
+                  </td>
                 </tr>
                 <tr>
-                  <td>按国家控制</td>
-                  <td>菲律宾（+63）</td>
-                  <td>异常注册集中地区临时风控</td>
+                  <td>邮箱域名</td>
+                  <td>@tempmail.net</td>
+                  <td>异常注册集中邮箱域名临时风控</td>
                   <td>2025-07-16 10:12:26</td>
-                  <td><a href="#" class="action-link">删除</a></td>
+                  <td>
+                    <a href="#" class="action-link js-open-blacklist-entry-editor" data-target="blacklist-phone-form-block" data-entry-mode="edit" data-phone-mode="country" data-country-value="@tempmail.net" data-reason="异常注册集中邮箱域名临时风控">编辑</a>
+                    <a href="#" class="action-link">删除</a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="risk-layout collapsible-config inline-entry-modal" id="blacklist-phone-form-block" hidden>
             <div class="config-panel" id="blacklist-phone-form">
-              <h2>新增手机号码黑名单</h2>
+              <h2>添加/编辑邮箱黑名单</h2>
               <div class="config-row">
                 <label>控制方式</label>
                 <div class="checkbox-list">
-                  <label class="checkbox-item"><input type="radio" name="phone-blacklist-mode" value="phone" checked>单个手机号</label>
-                  <label class="checkbox-item"><input type="radio" name="phone-blacklist-mode" value="country">按国家控制</label>
+                  <label class="checkbox-item"><input type="radio" name="phone-blacklist-mode" value="phone" checked>单个邮箱</label>
+                  <label class="checkbox-item"><input type="radio" name="phone-blacklist-mode" value="country">邮箱域名</label>
                 </div>
               </div>
               <div class="config-row" id="blacklist-phone-country-row" hidden>
-                <label>国家</label>
+                <label>邮箱域名</label>
                 <select>
                   <option>请选择</option>
-                  <option>中国（+86）</option>
-                  <option>菲律宾（+63）</option>
-                  <option>越南（+84）</option>
-                  <option>印度（+91）</option>
+                  <option>@tempmail.net</option>
+                  <option>@mailinator.com</option>
+                  <option>@sharklasers.com</option>
+                  <option>@guerrillamail.com</option>
                 </select>
-                <div class="helper-text">按国家控制时，表示该国家号段下的手机号默认禁止注册。</div>
+                <div class="helper-text">按邮箱域名控制时，表示该域名下注册邮箱默认按黑名单口径参与风控限制。</div>
               </div>
               <div class="config-row" id="blacklist-phone-number-row">
-                <label>输入手机号</label>
-                <textarea placeholder="多个手机号用 / 隔开，例如：+8613800000000/+639120000000">+8613800000000/+639120000000</textarea>
-                <div class="helper-text">单个手机号模式下，多个手机号用 `/` 隔开；系统按单条手机号拆分入库。</div>
+                <label>输入邮箱</label>
+                <textarea placeholder="多个邮箱用 / 隔开，例如：risk01@gmail.com/risk02@yahoo.com">risk_user_01@gmail.com/risk_user_02@yahoo.com</textarea>
+                <div class="helper-text">单个邮箱模式下，多个邮箱用 `/` 隔开；系统按单条邮箱拆分入库。</div>
               </div>
               <div class="config-row">
                 <label>转入原因</label>
-                <input type="text" value="异常注册集中地区临时风控" />
+                <input type="text" value="异常注册集中邮箱域名临时风控" />
+              </div>
+              <div class="config-desc">
+                <strong>用户控制配置</strong><br>
+                用于对当前黑名单对象执行单条用户控制处理，当前来源页为邮箱黑名单，本配置仅对当前对象生效。
+              </div>
+              <div class="modal-grid">
+                <div class="modal-field">
+                  <label>来源页面</label>
+                  <input type="text" value="邮箱黑名单" readonly />
+                </div>
+                <div class="modal-field">
+                  <label>当前对象</label>
+                  <input type="text" class="js-blacklist-inline-target" data-target-form="blacklist-phone-form" placeholder="根据上方录入内容自动带出" readonly />
+                </div>
+              </div>
+              <div class="modal-alert">勾选风控操作后，确认时按当前对象执行统一处理；如操作包含全部列入黑名单且对象命中白名单保护，仍需先进行白名单冲突确认。</div>
+              <div class="modal-field">
+                <label>风控操作</label>
+                <div class="modal-option-grid">
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止登录</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止注册</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止提现</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止现货交易</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">禁止合约开仓</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">全部列入可疑用户</label>
+                  <label class="modal-option-item"><input type="checkbox" class="blacklist-inline-action">全部列入黑名单</label>
+                </div>
+              </div>
+              <div class="config-row">
+                <label>备注</label>
+                <input type="text" class="js-blacklist-inline-remark" placeholder="请输入统一处理说明" />
               </div>
               <div class="config-actions">
                 <button type="button" class="button secondary js-close-inline-entry-modal">取消</button>
@@ -3551,16 +3912,16 @@
           <div class="section-head">
             <div>
               <div class="breadcrumb">
-                <span>后台</span><span>›</span><span>风控</span><span>›</span><span class="text-primary">合约可疑用户</span>
+                <span>后台</span><span>›</span><span>事后报警</span><span>›</span><span class="text-primary">高盈利高胜率用户</span>
               </div>
-              <h3>合约可疑用户</h3>
+              <h3>高盈利高胜率用户</h3>
             </div>
             <div class="page-tools">
               <div class="mini-status">当前状态 <span class="status-chip">开启</span></div>
               <div class="button-group">
-                <button type="button" class="button secondary js-open-rule-config" data-target="risk-contract-suspicious-config-block" data-config-source="合约可疑用户" data-config-title="合约可疑用户规则配置">规则配置</button>
-                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="合约可疑用户" data-monitor-status="开启">监控状态配置</button>
-                <button type="button" class="button secondary" id="go-risk-global-limit">合约可疑用户限制规则</button>
+                <button type="button" class="button secondary js-open-rule-config" data-target="risk-contract-suspicious-config-block" data-config-source="高盈利高胜率用户" data-config-title="高盈利高胜率用户规则配置">规则配置</button>
+                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="高盈利高胜率用户" data-monitor-status="开启">监控状态配置</button>
+                <button type="button" class="button secondary" id="go-risk-global-limit">高盈利高胜率用户限制规则</button>
                 <button type="button" class="button secondary" id="go-risk-contract-market-history">市价历史订单</button>
                 <button type="button" class="button secondary" id="go-risk-contract-limit-history">限价历史订单</button>
               </div>
@@ -3630,7 +3991,7 @@
                   <td>
                     <a href="#" class="action-link">正常用户</a>
                     <a href="#" class="action-link">黑名单用户</a>
-                    <a href="#" class="action-link js-open-user-config" data-user-uid="123" data-related-users="123" data-relation-default="0" data-config-source="合约可疑用户">相关操作配置</a>
+                    <a href="#" class="action-link js-open-user-config" data-user-uid="123" data-related-users="123" data-relation-default="0" data-config-source="高盈利高胜率用户">相关操作配置</a>
                   </td>
                 </tr>
                 <tr>
@@ -3646,7 +4007,7 @@
                   <td>
                     <a href="#" class="action-link">正常用户</a>
                     <a href="#" class="action-link">黑名单用户</a>
-                    <a href="#" class="action-link js-open-user-config" data-user-uid="223" data-related-users="223" data-relation-default="0" data-config-source="合约可疑用户">相关操作配置</a>
+                    <a href="#" class="action-link js-open-user-config" data-user-uid="223" data-related-users="223" data-relation-default="0" data-config-source="高盈利高胜率用户">相关操作配置</a>
                   </td>
                 </tr>
                 <tr>
@@ -3662,7 +4023,7 @@
                   <td>
                     <a href="#" class="action-link">正常用户</a>
                     <a href="#" class="action-link">黑名单用户</a>
-                    <a href="#" class="action-link js-open-user-config" data-user-uid="323" data-related-users="323" data-relation-default="0" data-config-source="合约可疑用户">相关操作配置</a>
+                    <a href="#" class="action-link js-open-user-config" data-user-uid="323" data-related-users="323" data-relation-default="0" data-config-source="高盈利高胜率用户">相关操作配置</a>
                   </td>
                 </tr>
               </tbody>
@@ -4104,7 +4465,7 @@
             <div class="config-panel">
               <h2>规则配置</h2>
               <div class="config-row">
-                <label>持仓时间大于等于</label>
+                <label>持仓时间小于等于</label>
                 <div class="input-suffix">
                   <input type="number" value="10" />
                   <span>分钟</span>
@@ -4356,7 +4717,7 @@
           <div class="section-head">
             <div>
               <div class="breadcrumb">
-                <span>后台</span><span>›</span><span>风控</span><span>›</span><span class="text-primary">同提币地址监控</span>
+                <span>后台</span><span>›</span><span>事前预警</span><span>›</span><span class="text-primary">同提币地址监控</span>
               </div>
               <h3>同提币地址监控</h3>
             </div>
@@ -4384,8 +4745,8 @@
               </select>
             </div>
             <div class="field">
-              <label>提币地址</label>
-              <input type="text" placeholder="请输入提币地址" />
+              <label>地址</label>
+              <input type="text" placeholder="请输入链上地址" />
             </div>
             <div class="field">
               <label>查询开始时间</label>
@@ -4416,12 +4777,12 @@
               <thead>
                 <tr>
                   <th><input type="checkbox" class="checkbox" checked></th>
-                  <th>提币时间</th>
+                  <th>时间</th>
                   <th>链类型</th>
-                  <th>提币地址</th>
-                  <th>同提币用户数</th>
+                  <th>地址</th>
+                  <th>同地址用户数</th>
                   <th>涉及用户ID</th>
-                  <th>同提币地址事件次数</th>
+                  <th>同地址事件次数</th>
                   <th>操作时间</th>
                   <th>操作</th>
                 </tr>
@@ -4483,7 +4844,7 @@
             <div class="config-panel">
               <h2>规则配置</h2>
               <div class="config-row">
-                <label>同提币用户数大于等于</label>
+                <label>同地址用户数大于等于</label>
                 <div class="input-suffix">
                   <input type="number" value="2" />
                   <span>个</span>
@@ -4493,9 +4854,11 @@
               <div class="config-row">
                 <label>时间范围</label>
                 <select>
-                  <option>仅1天</option>
-                  <option>7天</option>
-                  <option>30天</option>
+                  <option>1小时</option>
+                  <option>4小时</option>
+                  <option>8小时</option>
+                  <option>12小时</option>
+                  <option>48小时</option>
                 </select>
               </div>
               <div class="config-row">
@@ -5607,12 +5970,25 @@
                         <div class="helper-text">请输入纯数字整数。</div>
                       </div>
                       <div>
-                        <label>充值入账金额达到</label>
-                        <select>
-                          <option>低风险以上</option>
-                          <option>中风险以上</option>
-                          <option>高风险以上</option>
-                        </select>
+                        <label>低风险金额大于等于</label>
+                        <div class="input-suffix">
+                          <input type="number" value="50000">
+                          <span>USDT</span>
+                        </div>
+                      </div>
+                      <div>
+                        <label>中风险金额大于等于</label>
+                        <div class="input-suffix">
+                          <input type="number" value="100000">
+                          <span>USDT</span>
+                        </div>
+                      </div>
+                      <div>
+                        <label>高风险金额大于等于</label>
+                        <div class="input-suffix">
+                          <input type="number" value="200000">
+                          <span>USDT</span>
+                        </div>
                       </div>
                       <div>
                         <label>触发次数大于等于</label>
@@ -5623,7 +5999,7 @@
                         <div class="helper-text">请输入纯数字整数。</div>
                       </div>
                     </div>
-                    <div class="helper-text">在统计时间窗口内，充值入账金额达到“低风险以上”口径的次数超过配置值时，直接记入异常充值监控。</div>
+                    <div class="helper-text">在统计时间窗口内，充值入账金额达到以上任一金额档位的次数超过配置值时，直接记入异常充值监控。</div>
                   </div>
                   <div class="config-row span-2">
                     <label>触发角度2：停留时长 + 低交易占比 + 转出方式</label>
@@ -5827,15 +6203,15 @@
           <div class="section-head">
             <div>
               <div class="breadcrumb">
-                <span>后台</span><span>›</span><span>风控</span><span>›</span><span class="text-primary">交易同用户风控</span>
+                <span>后台</span><span>›</span><span>事后报警</span><span>›</span><span class="text-primary">对敲交易监控</span>
               </div>
-              <h3>交易同用户风控</h3>
+              <h3>对敲交易监控</h3>
             </div>
             <div class="page-tools">
               <div class="mini-status">当前状态 <span class="status-chip">开启</span></div>
               <div class="button-group">
-                <button type="button" class="button secondary js-open-rule-config" data-target="risk-trade-peer-config-block" data-config-source="交易同用户风控" data-config-title="交易同用户规则配置">规则配置</button>
-                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="交易同用户风控" data-monitor-status="开启">监控状态配置</button>
+                <button type="button" class="button secondary js-open-rule-config" data-target="risk-trade-peer-config-block" data-config-source="对敲交易监控" data-config-title="对敲交易规则配置">规则配置</button>
+                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="对敲交易监控" data-monitor-status="开启">监控状态配置</button>
               </div>
             </div>
           </div>
@@ -5907,7 +6283,7 @@
                   <td>2025-07-16 10:12:08</td>
                   <td>
                     <a href="#" class="action-link js-open-trade-peer-detail"
-                      data-trade-peer-source="交易同用户风控"
+                      data-trade-peer-source="对敲交易监控"
                       data-trade-peer-user="同交易对手高频成交"
                       data-trade-peer-uid="100861"
                       data-trade-peer-counterparty="200315,200316,200317"
@@ -5916,7 +6292,7 @@
                       data-trade-peer-total-amount="2,460,000 USDT"
                       data-trade-peer-time="2025-07-16 10:12:08"
                       data-trade-peer-records="现货,BTC/USDT,200315,580000,2025-07-16 10:12:08|现货,ETH/USDT,200316,420000,2025-07-16 10:10:22|合约,BTC永续,200317,1460000,2025-07-16 10:08:10">查看详情</a>
-                    <a href="#" class="action-link js-open-user-config" data-user-uid="100861" data-related-users="200315,200316,200317" data-relation-default="1" data-config-source="交易同用户风控">交易同用户风控配置</a>
+                    <a href="#" class="action-link js-open-user-config" data-user-uid="100861" data-related-users="200315,200316,200317" data-relation-default="1" data-config-source="对敲交易监控">对敲交易配置</a>
                   </td>
                 </tr>
                 <tr>
@@ -5931,7 +6307,7 @@
                   <td>2025-07-16 09:55:41</td>
                   <td>
                     <a href="#" class="action-link js-open-trade-peer-detail"
-                      data-trade-peer-source="交易同用户风控"
+                      data-trade-peer-source="对敲交易监控"
                       data-trade-peer-user="现货对敲疑似"
                       data-trade-peer-uid="100925"
                       data-trade-peer-counterparty="200411,200422"
@@ -5940,7 +6316,7 @@
                       data-trade-peer-total-amount="860,000 USDT"
                       data-trade-peer-time="2025-07-16 09:55:41"
                       data-trade-peer-records="现货,SOL/USDT,200411,260000,2025-07-16 09:55:41|现货,ETH/USDT,200422,600000,2025-07-16 09:41:03">查看详情</a>
-                    <a href="#" class="action-link js-open-user-config" data-user-uid="100925" data-related-users="200411,200422" data-relation-default="0" data-config-source="交易同用户风控">交易同用户风控配置</a>
+                    <a href="#" class="action-link js-open-user-config" data-user-uid="100925" data-related-users="200411,200422" data-relation-default="0" data-config-source="对敲交易监控">对敲交易配置</a>
                   </td>
                 </tr>
                 <tr>
@@ -5955,7 +6331,7 @@
                   <td>2025-07-16 08:46:19</td>
                   <td>
                     <a href="#" class="action-link js-open-trade-peer-detail"
-                      data-trade-peer-source="交易同用户风控"
+                      data-trade-peer-source="对敲交易监控"
                       data-trade-peer-user="合约对手集中成交"
                       data-trade-peer-uid="101024"
                       data-trade-peer-counterparty="200801"
@@ -5964,7 +6340,7 @@
                       data-trade-peer-total-amount="3,120,000 USDT"
                       data-trade-peer-time="2025-07-16 08:46:19"
                       data-trade-peer-records="合约,BTC永续,200801,1820000,2025-07-16 08:46:19|合约,ETH永续,200801,1180000,2025-07-16 08:38:27|现货,BTC/USDT,200801,120000,2025-07-16 08:31:10">查看详情</a>
-                    <a href="#" class="action-link js-open-user-config" data-user-uid="101024" data-related-users="200801" data-relation-default="1" data-config-source="交易同用户风控">交易同用户风控配置</a>
+                    <a href="#" class="action-link js-open-user-config" data-user-uid="101024" data-related-users="200801" data-relation-default="1" data-config-source="对敲交易监控">对敲交易配置</a>
                   </td>
                 </tr>
               </tbody>
@@ -5977,7 +6353,7 @@
               <div class="config-row">
                 <div class="range-group">
                   <div>
-                    <label>统计时间范围大于等于</label>
+                    <label>统计时间范围小于等于</label>
                     <div class="input-suffix">
                       <input type="number" value="30" />
                       <span>分钟</span>
@@ -5997,8 +6373,11 @@
               <div class="config-row">
                 <div class="range-group">
                   <div>
-                    <label>最小总金额大于等于</label>
-                    <input type="number" value="50000" />
+                    <label>时间段内累计交易金额大于等于</label>
+                    <div class="input-suffix">
+                      <input type="number" value="50000" />
+                      <span>USDT</span>
+                    </div>
                     <div class="helper-text">请输入纯数字整数。</div>
                   </div>
                   <div>
@@ -6048,12 +6427,12 @@
           <div class="section-head">
             <div>
               <div class="breadcrumb">
-                <span>后台</span><span>›</span><span>风控</span><span>›</span><span>交易同用户风控</span><span>›</span><span class="text-primary">查看详情</span>
+                <span>后台</span><span>›</span><span>事后报警</span><span>›</span><span>对敲交易监控</span><span>›</span><span class="text-primary">查看详情</span>
               </div>
               <h3>交易同用户详情</h3>
             </div>
             <div class="button-group">
-              <button type="button" class="button secondary" id="back-from-trade-peer-detail">返回交易同用户风控</button>
+              <button type="button" class="button secondary" id="back-from-trade-peer-detail">返回对敲交易监控</button>
             </div>
           </div>
 
@@ -6107,10 +6486,483 @@
                   <td>200315</td>
                   <td>580,000 USDT</td>
                   <td>2025-07-16 10:12:08</td>
-                  <td><a href="#" class="action-link js-open-user-config" data-user-uid="100861" data-related-users="200315,200316,200317" data-relation-default="1" data-config-source="交易同用户风控">交易同用户风控配置</a></td>
+                  <td><a href="#" class="action-link js-open-user-config" data-user-uid="100861" data-related-users="200315,200316,200317" data-relation-default="1" data-config-source="对敲交易监控">对敲交易配置</a></td>
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="risk-large-position-monitor" class="page">
+        <div class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="breadcrumb">
+                <span>后台</span><span>›</span><span>事前预警</span><span>›</span><span class="text-primary">大额持仓监控</span>
+              </div>
+              <h3>大额持仓监控</h3>
+            </div>
+            <div class="page-tools">
+              <div class="mini-status">当前状态 <span class="status-chip">开启</span></div>
+              <div class="button-group">
+                <button type="button" class="button secondary js-open-rule-config" data-target="risk-large-position-config-block" data-config-source="大额持仓监控" data-config-title="大额持仓规则配置">规则配置</button>
+                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="大额持仓监控" data-monitor-status="开启">监控状态配置</button>
+              </div>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field">
+              <label>查询条件</label>
+              <input type="text" placeholder="用户ID/手机/邮箱" />
+            </div>
+            <div class="field">
+              <label>合约币对</label>
+              <select><option>全部</option><option>BTC/USDT</option><option>ETH/USDT</option><option>SOL/USDT</option></select>
+            </div>
+            <div class="field">
+              <label>开始时间</label>
+              <input type="datetime-local" />
+            </div>
+            <div class="field">
+              <label>结束时间</label>
+              <input type="datetime-local" />
+            </div>
+            <div class="field">
+              <label>操作</label>
+              <div class="button-group"><button type="button" class="button">查询</button><button type="button" class="button secondary">重置</button></div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="checkbox" checked></th>
+                  <th>用户UID</th>
+                  <th>用户其他风控行为</th>
+                  <th>用户持仓总名义价值</th>
+                  <th>盈利率</th>
+                  <th>持仓币对数</th>
+                  <th>操作时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="checkbox" checked></td>
+                  <td>100901</td>
+                  <td><div class="risk-behavior-list"><span class="risk-behavior-tag">高盈利高胜率用户</span></div></td>
+                  <td>5,600,000 USDT</td>
+                  <td>68.40%</td>
+                  <td>4</td>
+                  <td>2025-07-16 12:18:03</td>
+                  <td><a href="#" class="action-link js-open-user-config" data-user-uid="100901" data-related-users="100901" data-relation-default="0" data-config-source="大额持仓监控">大额持仓配置</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="risk-layout collapsible-config" id="risk-large-position-config-block" hidden>
+            <div class="config-panel">
+              <h2>规则配置</h2>
+              <div class="config-row">
+                <label>用户持仓总名义价值大于等于</label>
+                <div class="input-suffix"><input type="number" value="1000000" /><span>USDT</span></div>
+                <div class="helper-text">请输入纯数字整数。</div>
+              </div>
+              <div class="config-row">
+                <label>盈利率大于等于</label>
+                <div class="input-suffix"><input type="number" value="30" /><span>%</span></div>
+                <div class="helper-text">请输入纯数字整数。</div>
+              </div>
+              <div class="config-row">
+                <label>异常处理方式</label>
+                <select><option>请选择</option><option>仅标记</option><option>禁止合约开仓</option><option>提现人工审核</option></select>
+              </div>
+              <div class="config-actions"><button type="button" class="button secondary">取消</button><button type="button" class="button">确认</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="risk-deposit-address-monitor" class="page">
+        <div class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="breadcrumb">
+                <span>后台</span><span>›</span><span>事前预警</span><span>›</span><span class="text-primary">同充值地址监控</span>
+              </div>
+              <h3>同充值地址监控</h3>
+            </div>
+            <div class="page-tools">
+              <div class="mini-status">当前状态 <span class="status-chip">开启</span></div>
+              <div class="button-group">
+                <button type="button" class="button secondary js-open-rule-config" data-target="risk-deposit-address-config-block" data-config-source="同充值地址监控" data-config-title="同充值地址规则配置">规则配置</button>
+                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="同充值地址监控" data-monitor-status="开启">监控状态配置</button>
+              </div>
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label>查询条件</label><input type="text" placeholder="用户ID/手机/邮箱" /></div>
+            <div class="field"><label>链类型</label><select><option>全部</option><option>TRC20-USDT</option><option>ERC20-USDT</option><option>BTC</option></select></div>
+            <div class="field"><label>充值地址</label><input type="text" placeholder="请输入充值地址" /></div>
+            <div class="field"><label>开始时间</label><input type="datetime-local" /></div>
+            <div class="field"><label>结束时间</label><input type="datetime-local" /></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="checkbox" checked></th>
+                  <th>时间</th>
+                  <th>链类型</th>
+                  <th>充值地址</th>
+                  <th>同地址用户数</th>
+                  <th>涉及用户UID</th>
+                  <th>操作时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="checkbox" checked></td>
+                  <td>2025-07-16 11:06:15</td>
+                  <td>TRC20-USDT</td>
+                  <td>TG88sameDepositAddress001</td>
+                  <td>4</td>
+                  <td>1201,1203,1206,1210</td>
+                  <td>2025-07-16 11:06:15</td>
+                  <td><a href="#" class="action-link js-open-user-config" data-user-uid="1201" data-related-users="1201,1203,1206,1210" data-relation-default="1" data-config-source="同充值地址监控">同充值地址配置</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="risk-layout collapsible-config" id="risk-deposit-address-config-block" hidden>
+            <div class="config-panel">
+              <h2>规则配置</h2>
+              <div class="config-row">
+                <label>同地址用户数大于等于</label>
+                <div class="input-suffix"><input type="number" value="3" /><span>个</span></div>
+              </div>
+              <div class="config-row">
+                <label>时间范围</label>
+                <select><option>1小时</option><option>4小时</option><option>8小时</option><option>12小时</option><option>48小时</option></select>
+              </div>
+              <div class="config-actions"><button type="button" class="button secondary">取消</button><button type="button" class="button">确认</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="risk-internal-transfer-monitor" class="page">
+        <div class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="breadcrumb">
+                <span>后台</span><span>›</span><span>事前预警</span><span>›</span><span class="text-primary">同uid内部划转监控</span>
+              </div>
+              <h3>同uid内部划转监控</h3>
+            </div>
+            <div class="page-tools">
+              <div class="mini-status">当前状态 <span class="status-chip">开启</span></div>
+              <div class="button-group">
+                <button type="button" class="button secondary js-open-rule-config" data-target="risk-internal-transfer-config-block" data-config-source="同uid内部划转监控" data-config-title="同uid内部划转规则配置">规则配置</button>
+                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="同uid内部划转监控" data-monitor-status="开启">监控状态配置</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="checkbox" checked></th>
+                  <th>内部账号</th>
+                  <th>1小时内提现用户数</th>
+                  <th>涉及用户UID</th>
+                  <th>累计提现金额</th>
+                  <th>操作时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="checkbox" checked></td>
+                  <td>inner-merchant-8891</td>
+                  <td>5</td>
+                  <td>2101,2102,2106,2109,2111</td>
+                  <td>860,000 USDT</td>
+                  <td>2025-07-16 10:46:03</td>
+                  <td><a href="#" class="action-link js-open-user-config" data-user-uid="2101" data-related-users="2101,2102,2106,2109,2111" data-relation-default="1" data-config-source="同uid内部划转监控">同uid内部划转配置</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="risk-layout collapsible-config" id="risk-internal-transfer-config-block" hidden>
+            <div class="config-panel">
+              <h2>规则配置</h2>
+              <div class="config-row">
+                <label>1小时内累计提现用户数大于等于</label>
+                <div class="input-suffix"><input type="number" value="3" /><span>个</span></div>
+                <div class="helper-text">请输入纯数字整数。</div>
+              </div>
+              <div class="config-actions"><button type="button" class="button secondary">取消</button><button type="button" class="button">确认</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="risk-large-transfer-monitor" class="page">
+        <div class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="breadcrumb">
+                <span>后台</span><span>›</span><span>事前预警</span><span>›</span><span class="text-primary">大额出入金监控</span>
+              </div>
+              <h3>大额出入金监控</h3>
+            </div>
+            <div class="page-tools">
+              <div class="mini-status">当前状态 <span class="status-chip">开启</span></div>
+              <div class="button-group">
+                <button type="button" class="button secondary js-open-rule-config" data-target="risk-large-transfer-config-block" data-config-source="大额出入金监控" data-config-title="大额出入金规则配置">规则配置</button>
+                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="大额出入金监控" data-monitor-status="开启">监控状态配置</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="checkbox" checked></th>
+                  <th>用户UID</th>
+                  <th>类型</th>
+                  <th>渠道</th>
+                  <th>单笔金额</th>
+                  <th>命中证据说明</th>
+                  <th>操作时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="checkbox" checked></td>
+                  <td>3401</td>
+                  <td>出金</td>
+                  <td>链上</td>
+                  <td>320,000 USDT</td>
+                  <td>单笔链上出金达到配置阈值300,000 USDT</td>
+                  <td>2025-07-16 12:26:51</td>
+                  <td><a href="#" class="action-link js-open-user-config" data-user-uid="3401" data-related-users="3401" data-relation-default="0" data-config-source="大额出入金监控">大额出入金配置</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="risk-layout collapsible-config" id="risk-large-transfer-config-block" hidden>
+            <div class="config-panel">
+              <h2>规则配置</h2>
+              <div class="config-row">
+                <label>单笔出入金大于等于</label>
+                <div class="input-suffix"><input type="number" value="300000" /><span>USDT</span></div>
+              </div>
+              <div class="checkbox-list">
+                <label class="checkbox-item"><input type="checkbox" checked>C2C</label>
+                <label class="checkbox-item"><input type="checkbox" checked>链上</label>
+                <label class="checkbox-item"><input type="checkbox" checked>内部转账</label>
+              </div>
+              <div class="config-actions"><button type="button" class="button secondary">取消</button><button type="button" class="button">确认</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="risk-cumulative-withdraw-monitor" class="page">
+        <div class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="breadcrumb">
+                <span>后台</span><span>›</span><span>事前预警</span><span>›</span><span class="text-primary">累计出金超过入金监控</span>
+              </div>
+              <h3>累计出金超过入金监控</h3>
+            </div>
+            <div class="page-tools">
+              <div class="mini-status">当前状态 <span class="status-chip">开启</span></div>
+              <div class="button-group">
+                <button type="button" class="button secondary js-open-rule-config" data-target="risk-cumulative-withdraw-config-block" data-config-source="累计出金超过入金监控" data-config-title="累计出金超过入金规则配置">规则配置</button>
+                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="累计出金超过入金监控" data-monitor-status="开启">监控状态配置</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="checkbox" checked></th>
+                  <th>用户UID</th>
+                  <th>累计入金</th>
+                  <th>累计出金</th>
+                  <th>超出金额</th>
+                  <th>本次预警渠道</th>
+                  <th>操作时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="checkbox" checked></td>
+                  <td>5609</td>
+                  <td>420,000 USDT</td>
+                  <td>560,000 USDT</td>
+                  <td>140,000 USDT</td>
+                  <td>内部转账</td>
+                  <td>2025-07-16 12:41:09</td>
+                  <td><a href="#" class="action-link js-open-user-config" data-user-uid="5609" data-related-users="5609" data-relation-default="0" data-config-source="累计出金超过入金监控">累计出金超过入金配置</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="risk-layout collapsible-config" id="risk-cumulative-withdraw-config-block" hidden>
+            <div class="config-panel">
+              <h2>规则配置</h2>
+              <div class="config-row">
+                <label>累计出金大于累计入金</label>
+                <div class="input-suffix"><input type="number" value="100000" /><span>USDT</span></div>
+                <div class="helper-text">请输入纯数字整数，表示超过该金额后每次出金均预警。</div>
+              </div>
+              <div class="checkbox-list">
+                <label class="checkbox-item"><input type="checkbox" checked>C2C</label>
+                <label class="checkbox-item"><input type="checkbox" checked>链上</label>
+                <label class="checkbox-item"><input type="checkbox" checked>内部转账</label>
+              </div>
+              <div class="config-actions"><button type="button" class="button secondary">取消</button><button type="button" class="button">确认</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="risk-small-coin-monitor" class="page">
+        <div class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="breadcrumb">
+                <span>后台</span><span>›</span><span>事后报警</span><span>›</span><span class="text-primary">小币种风控</span>
+              </div>
+              <h3>小币种风控</h3>
+            </div>
+            <div class="page-tools">
+              <div class="mini-status">当前状态 <span class="status-chip">开启</span></div>
+              <div class="button-group">
+                <button type="button" class="button secondary js-open-rule-config" data-target="risk-small-coin-config-block" data-config-source="小币种风控" data-config-title="小币种风控规则配置">规则配置</button>
+                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="小币种风控" data-monitor-status="开启">监控状态配置</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="checkbox" checked></th>
+                  <th>用户UID</th>
+                  <th>币对</th>
+                  <th>杠杆</th>
+                  <th>相同杠杆同币种持仓时间</th>
+                  <th>满足持仓时间仓位占比</th>
+                  <th>24小时胜率</th>
+                  <th>操作时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="checkbox" checked></td>
+                  <td>7701</td>
+                  <td>WIF/USDT</td>
+                  <td>20x</td>
+                  <td>6分钟</td>
+                  <td>72.00%</td>
+                  <td>86.00%</td>
+                  <td>2025-07-16 12:56:41</td>
+                  <td><a href="#" class="action-link js-open-user-config" data-user-uid="7701" data-related-users="7701" data-relation-default="0" data-config-source="小币种风控">小币种风控配置</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="risk-layout collapsible-config" id="risk-small-coin-config-block" hidden>
+            <div class="config-panel">
+              <h2>规则配置</h2>
+              <div class="config-row">
+                <label>持仓金额大于等于</label>
+                <div class="input-suffix"><input type="number" value="50000" /><span>USDT</span></div>
+                <div class="helper-text">请输入纯数字整数。</div>
+              </div>
+              <div class="config-row">
+                <label>输入不在统计列表的币对</label>
+                <div class="input-group">
+                  <input type="text" id="risk-small-coin-symbol-input" placeholder="请输入单个合约币对，例如：BTC/USDT" />
+                  <button type="button" class="button secondary" id="risk-small-coin-symbol-add">添加币对</button>
+                </div>
+                <div class="helper-text">仅支持单个合约币对输入，格式示例：BTC/USDT。添加后下方可删除。</div>
+              </div>
+              <div class="config-row">
+                <label>已排除币对</label>
+                <div class="tag-list" id="risk-small-coin-symbol-list"></div>
+                <input type="hidden" id="risk-small-coin-symbols-hidden" value="BTC/USDT,SOL/USDT" />
+              </div>
+              <div class="config-actions"><button type="button" class="button secondary">取消</button><button type="button" class="button">确认</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="risk-order-brush-monitor" class="page">
+        <div class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="breadcrumb">
+                <span>后台</span><span>›</span><span>事后报警</span><span>›</span><span class="text-primary">打单风控</span>
+              </div>
+              <h3>打单风控</h3>
+            </div>
+            <div class="page-tools">
+              <div class="mini-status">当前状态 <span class="status-chip">开启</span></div>
+              <div class="button-group">
+                <button type="button" class="button secondary js-open-rule-config" data-target="risk-order-brush-config-block" data-config-source="打单风控" data-config-title="打单风控规则配置">规则配置</button>
+                <button type="button" class="button secondary js-open-monitor-status" data-monitor-source="打单风控" data-monitor-status="开启">监控状态配置</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="checkbox" checked></th>
+                  <th>用户UID</th>
+                  <th>仓位标识</th>
+                  <th>同仓位加仓减仓次数</th>
+                  <th>24小时胜率</th>
+                  <th>累计成交金额</th>
+                  <th>操作时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="checkbox" checked></td>
+                  <td>8803</td>
+                  <td>BTC永续-多仓-20x</td>
+                  <td>28</td>
+                  <td>91.00%</td>
+                  <td>1,880,000 USDT</td>
+                  <td>2025-07-16 13:08:12</td>
+                  <td><a href="#" class="action-link js-open-user-config" data-user-uid="8803" data-related-users="8803" data-relation-default="0" data-config-source="打单风控">打单风控配置</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="risk-layout collapsible-config" id="risk-order-brush-config-block" hidden>
+            <div class="config-panel">
+              <h2>规则配置</h2>
+              <div class="config-row"><label>同一仓位内加仓减仓操作次数大于等于</label><div class="input-suffix"><input type="number" value="20" /><span>次</span></div></div>
+              <div class="config-row"><label>24小时内胜率大于等于</label><div class="input-suffix"><input type="number" value="80" /><span>%</span></div></div>
+              <div class="config-actions"><button type="button" class="button secondary">取消</button><button type="button" class="button">确认</button></div>
+            </div>
           </div>
         </div>
       </section>
@@ -6135,7 +6987,7 @@
               <label>处理来源</label>
               <select>
                 <option>全部</option>
-                <option>合约可疑用户</option>
+                <option>高盈利高胜率用户</option>
                 <option>异常登录监控</option>
                 <option>批量注册监控</option>
                 <option>高频短时持仓监控</option>
@@ -6144,7 +6996,7 @@
                 <option>羊毛党监控</option>
                 <option>异常充值监控</option>
                 <option>用户同密码</option>
-                <option>交易同用户风控</option>
+                <option>对敲交易监控</option>
               </select>
             </div>
             <div class="field">
@@ -7303,6 +8155,7 @@
         <ol>
           <li>标题：只读字段，按当前来源动态显示，如 `异常登录识别规则`、`同提币地址规则配置`。</li>
           <li>配置内容：动态加载当前来源页面对应的规则表单；只展示本次点击入口对应的配置块，不混入其他页面配置。</li>
+          <li>统计时间口径：本功能属于事件驱动的独立动态窗口监控机制；当触发行为发生时生成一个独立的 Monitor ID，并记录统计开始时间；结束时间 = 开始时间 + 配置的统计时间；在结束时间前持续统计且触发不中断；到结束时间后停止统计，并依据窗口期内是否达标将状态结算为 `已触发` 或 `已结束`。</li>
           <li>数字类输入：按页面业务口径区分为 `价格/数量字段按后端返回截取`、`百分比默认保留两位小数点`、`普通数字展示整数`、`分钟/MS仅展示整数无小数点`；输入框前的 `大于等于 / 小于等于`、单位、是否带 `%` 必须与页面正文一致。</li>
           <li>谷歌验证码：统一追加在规则配置底部；当前原型按非空校验，未填写时主确认按钮不允许保存。</li>
         </ol>
@@ -7436,6 +8289,20 @@
       </div>
     </div>
 
+    <div class="spec-page" data-spec-page="blacklist-liquidation-history">
+      <div class="spec-card">
+        <strong>黑名单强平仓列表说明</strong>
+        <em>运营说明</em>
+        <ol>
+          <li>本页用于查看黑名单用户发生强平后的历史持仓记录，便于回溯强平触发与处置结果。</li>
+          <li>筛选项包含 `订单号`、`用户UID`、`交易对`、`方向`、`状态`、`开仓时间范围`、`最近更新时间范围`。</li>
+          <li>列表字段依次为 `用户UID`、`合约交易对`、`方向`、`持仓数量`、`开仓均价`、`平仓均价`、`已实现盈亏`、`盈利率`、`开仓时间`、`最近更新时间`、`操作`。</li>
+          <li>`操作` 仅包含 `对应订单详情`，点击后跳转订单详情页。</li>
+          <li>本页默认按 `最近更新时间` 倒序排列。</li>
+        </ol>
+      </div>
+    </div>
+
     <div class="spec-page" data-spec-page="blacklist-add">
       <div class="spec-card">
         <strong>添加黑名单说明</strong>
@@ -7458,8 +8325,8 @@
         <em>运营说明</em>
         <ol>
           <li>筛选项支持按 `IP/关联账号` 及时间范围检索IP黑名单记录。</li>
-          <li>列表字段包含 `IP`、`转入原因`、`操作时间`、`操作`。</li>
-          <li>页头提供 `添加IP黑名单` 入口，支持 `控制方式` 选择 `单个IP` 或 `国家`；选择 `单个IP` 时不展示国家选择，选择 `国家` 时不展示IP输入框。</li>
+          <li>列表字段包含 `IP`、`转入原因`、`操作时间`、`操作`，其中 `操作` 包含 `编辑`、`删除`。</li>
+          <li>页头提供 `添加/编辑IP黑名单` 入口，新增与编辑共用同一配置区域，支持 `控制方式` 选择 `单个IP` 或 `国家`；选择 `单个IP` 时不展示国家选择，选择 `国家` 时不展示IP输入框。</li>
         </ol>
         <em>注意事项</em>
         <ol>
@@ -7477,8 +8344,8 @@
         <em>运营说明</em>
         <ol>
           <li>筛选项支持按 `设备ID/设备指纹` 与 `类型` 检索设备黑名单记录。</li>
-          <li>列表字段包含 `设备ID`、`类型`、`转入原因`、`操作时间`、`操作`。</li>
-          <li>页头提供 `添加设备黑名单` 入口，用于新增设备黑名单对象。</li>
+          <li>列表字段包含 `设备ID`、`类型`、`转入原因`、`操作时间`、`操作`，其中 `操作` 包含 `编辑`、`删除`。</li>
+          <li>页头提供 `添加/编辑设备黑名单` 入口，新增与编辑共用同一配置区域。</li>
         </ol>
         <em>注意事项</em>
         <ol>
@@ -7494,8 +8361,8 @@
         <em>运营说明</em>
         <ol>
           <li>筛选项支持按 `提币地址` 与时间范围检索提币地址黑名单记录。</li>
-          <li>列表字段包含 `提币地址`、`转入原因`、`操作时间`、`操作`。</li>
-          <li>页头提供 `添加提币地址黑名单` 入口，用于新增地址黑名单对象。</li>
+          <li>列表字段包含 `提币地址`、`转入原因`、`操作时间`、`操作`，其中 `操作` 包含 `编辑`、`删除`。</li>
+          <li>页头提供 `添加/编辑提币地址黑名单` 入口，新增与编辑共用同一配置区域。</li>
         </ol>
         <em>注意事项</em>
         <ol>
@@ -7511,8 +8378,8 @@
         <em>运营说明</em>
         <ol>
           <li>筛选项支持按 `密码摘要` 与 `类型` 检索密码黑名单记录。</li>
-          <li>列表字段包含 `密码摘要`、`类型`、`转入原因`、`操作时间`、`操作`。</li>
-          <li>页头提供 `添加密码黑名单` 入口，用于新增密码黑名单对象。</li>
+          <li>列表字段包含 `密码摘要`、`类型`、`转入原因`、`操作时间`、`操作`，其中 `操作` 包含 `编辑`、`删除`。</li>
+          <li>页头提供 `添加/编辑密码黑名单` 入口，新增与编辑共用同一配置区域。</li>
         </ol>
         <em>注意事项</em>
         <ol>
@@ -7528,8 +8395,8 @@
         <em>运营说明</em>
         <ol>
           <li>筛选项支持按 `手机号/国家` 与 `类型` 检索手机号码黑名单记录。</li>
-          <li>列表字段包含 `类型`、`手机号/国家`、`转入原因`、`操作时间`、`操作`。</li>
-          <li>页头提供 `添加手机号码黑名单` 入口，用于新增手机号黑名单或按国家控制规则。</li>
+          <li>列表字段包含 `类型`、`手机号/国家`、`转入原因`、`操作时间`、`操作`，其中 `操作` 包含 `编辑`、`删除`。</li>
+          <li>页头提供 `添加/编辑手机号码黑名单` 入口，新增与编辑共用同一配置区域，用于维护手机号黑名单或按国家控制规则。</li>
         </ol>
         <em>注意事项</em>
         <ol>
@@ -7749,7 +8616,7 @@
         </ol>
         <em>注意事项</em>
         <ol>
-          <li>数字类规则配置统一使用纯数字整数录入；本页 `持仓时间大于等于`、`交易频率大于等于`、`胜率大于等于` 均按整数维护。</li>
+          <li>数字类规则配置统一使用纯数字整数录入；本页 `持仓时间小于等于`、`交易频率大于等于`、`胜率大于等于` 均按整数维护。</li>
           <li>`平台最新价`、`币安最新价`、`价差` 等价格字段以页面行情展示结果为准，页面不额外重算精度。</li>
           <li>如选择 `禁止登录`、`禁止提现`、`禁止现货交易`、`禁止合约开仓`、`提现人工审核` 或 `需要人脸认证KYC`，应在实际系统中记录执行日志与人工复核结果。</li>
           <li>`高频短时持仓配置` 仅针对当前命中的单条用户记录执行风控处理，不再附带关联用户范围配置。</li>
@@ -7785,7 +8652,7 @@
         <strong>同提币地址监控说明</strong>
         <em>运营说明</em>
         <ol>
-          <li>本页按同提币地址事件识别异常提币关联行为，页面结构与 `同秒开仓监控` 保持一致。</li>
+          <li>本页按同提币地址事件识别异常链上地址聚合行为，页面结构与 `同秒开仓监控` 保持一致。</li>
           <li>筛选项包含 `查询条件`、`链类型`、`提币地址`、`查询开始时间`、`查询结束时间`，用于按用户ID、链类型、提币地址与时间范围检索记录。</li>
           <li>列表字段依次为 `提币时间`、`链类型`、`提币地址`、`同提币用户数`、`涉及用户ID`、`同提币地址事件次数`、`操作时间`、`操作`。</li>
           <li>`规则配置` 仅包含 `同提币用户数大于等于`、`时间范围`、`异常处理方式` 三项核心内容。</li>
@@ -7793,7 +8660,7 @@
         </ol>
         <em>注意事项</em>
         <ol>
-          <li>`同提币用户数大于等于` 用于配置同一提币地址关联的最少用户数量阈值，按纯数字整数录入。</li>
+          <li>`同地址用户数大于等于` 用于配置同一地址关联的最少用户数量阈值，按纯数字整数录入。</li>
           <li>同提币地址监控默认按 `同一用户排重` 处理，不在规则配置中单独展示或要求人工配置。</li>
           <li>`同提币地址配置` 中可选择是否纳入关联同提币地址用户集合；纳入后按关联用户集合作为统一处理范围。</li>
         </ol>
@@ -7825,10 +8692,10 @@
     </div>
     <div class="spec-page" data-spec-page="risk-contract-suspicious-monitor">
       <div class="spec-card">
-        <strong>合约可疑用户说明</strong>
+        <strong>高盈利高胜率用户说明</strong>
         <em>运营说明</em>
         <ol>
-          <li>本页为 `用户监控列表` 在 `风控用户` 分组下的复制页，名称调整为 `合约可疑用户`，避免单独展示“可疑用户”造成误解。</li>
+          <li>本页用于识别高盈利、高胜率且具备持续盈利特征的用户，不再使用 `合约可疑用户` 命名。</li>
           <li>筛选项包含 `查询条件`、`类型`、`查询开始时间`，其中 `查询条件` 统一按 `用户ID/手机/邮箱` 检索合约可疑用户池中的用户记录。</li>
           <li>列表字段依次为 `用户ID`、`用户其他风控行为`、`平均持仓时间`、`胜率`、`盈利率`、`账户余额`、`盈利`、`操作时间`、`操作`。</li>
           <li>`操作` 当前支持 `正常用户`、`黑名单用户`、`相关操作配置` 三类入口；`相关操作配置` 按当前用户单条生效。</li>
@@ -7929,20 +8796,21 @@
     </div>
     <div class="spec-page" data-spec-page="risk-trade-peer-monitor">
       <div class="spec-card">
-        <strong>交易同用户风控说明</strong>
+        <strong>对敲交易监控说明</strong>
         <em>运营说明</em>
         <ol>
-          <li>在配置的统计时间范围内，如用户在 `现货` 或 `合约` 交易中，与同一批对手用户发生的交易次数超过阈值，且对手用户不在白名单，则进入本页展示。</li>
+          <li>统计时间口径：当触发行为发生时，为该用户动态生成一个独立的 Monitor ID，并记录统计开始时间与结束时间（结束时间 = 开始时间 + 配置的统计时间）；在结束时间前持续统计且触发不中断；到结束时间后停止统计，并依据窗口期内是否达标将状态结算为 `已触发` 或 `已结束`。</li>
+          <li>在统计窗口期内，如用户在 `现货` 或 `合约` 交易中，与同一批对手用户发生的交易次数超过阈值，且对手用户不在白名单，则进入本页展示。</li>
           <li>筛选项包含 `查询条件`、`类型`、`开始时间`、`结束时间`，用于按交易用户UID、对手用户UID、交易类型和时间范围检索命中记录。</li>
           <li>列表字段依次为 `交易用户UID`、`对手用户UID`、`用户`、`用户其他风控行为`、`现货次数`、`合约次数`、`总金额`、`操作时间`、`操作`。</li>
           <li>`用户其他风控行为` 用于汇总展示该用户已命中的其他风控性质；仅有一项时展示一项，多项时并列展示多项，便于管理区快速定位用户性质。</li>
-          <li>`操作` 包含 `查看详情` 与 `交易同用户风控配置`。</li>
-          <li>规则配置中的 `统计时间范围`、`交易次数阈值`、`最小总金额`、`统计类型`、`异常处理方式` 用于识别同交易对手高频交易行为。</li>
+          <li>`操作` 包含 `查看详情` 与 `对敲交易配置`。</li>
+          <li>规则配置中的 `统计时间范围`、`交易次数阈值`、`时间段内累计交易金额`、`统计类型`、`异常处理方式` 用于识别对敲交易行为。</li>
         </ol>
         <em>注意事项</em>
         <ol>
           <li>对手用户进入任一白名单域后，不再作为本页命中统计对象。</li>
-          <li>`交易同用户风控配置` 按当前监控页面单独生效，可选择是否将交易对手用户一并纳入统一处理。</li>
+          <li>`对敲交易配置` 按当前监控页面单独生效，可选择是否将交易对手用户一并纳入统一处理。</li>
           <li>规则配置或监控状态配置变更后，仅重新判断当前列表中的已有记录是否仍属于命中范围；此前已转为正常用户的历史记录不再回扫，新命中记录按新规则入表。</li>
         </ol>
       </div>
@@ -8041,6 +8909,76 @@
           <li>进入密码白名单的密码摘要不再参与 `用户同密码` 相关密码维度命中。</li>
           <li>`触发事件` 弹窗需展示 `触发时间`、`相关用户UID`、`触发原因` 三项内容，且一次一条展示。</li>
           <li>本页无 `更新时间` 字段，默认按 `操作时间` 倒序排序。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="spec-page" data-spec-page="risk-large-position-monitor">
+      <div class="spec-card">
+        <strong>大额持仓监控说明</strong>
+        <em>运营说明</em>
+        <ol>
+          <li>本页用于按 `用户持仓总名义价值` 与 `盈利率` 识别大额持仓预警用户。</li>
+          <li>规则配置包含 `用户持仓总名义价值大于等于`、`盈利率大于等于`、`异常处理方式`。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="spec-page" data-spec-page="risk-deposit-address-monitor">
+      <div class="spec-card">
+        <strong>同充值地址监控说明</strong>
+        <em>运营说明</em>
+        <ol>
+          <li>本页用于识别同一充值地址在短时间内聚合多个用户的预警记录。</li>
+          <li>规则配置包含 `同地址用户数大于等于` 与 `时间范围`，时间范围支持 `1小时/4小时/8小时/12小时/48小时`。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="spec-page" data-spec-page="risk-internal-transfer-monitor">
+      <div class="spec-card">
+        <strong>同uid内部划转监控说明</strong>
+        <em>运营说明</em>
+        <ol>
+          <li>本页用于识别 `1小时内累计超过3个用户向同一内部账号提现` 的预警记录。</li>
+          <li>规则配置核心项为 `1小时内累计提现用户数大于等于`。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="spec-page" data-spec-page="risk-large-transfer-monitor">
+      <div class="spec-card">
+        <strong>大额出入金监控说明</strong>
+        <em>运营说明</em>
+        <ol>
+          <li>本页用于识别单笔 `C2C/链上/内部转账` 大额出入金预警。</li>
+          <li>规则配置核心项为 `单笔出入金大于等于` 与渠道选择。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="spec-page" data-spec-page="risk-cumulative-withdraw-monitor">
+      <div class="spec-card">
+        <strong>累计出金超过入金监控说明</strong>
+        <em>运营说明</em>
+        <ol>
+          <li>本页用于识别用户累计出金大于累计入金指定金额后，每次出金都触发的预警记录。</li>
+          <li>规则配置核心项为 `累计出金大于累计入金` 与渠道选择。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="spec-page" data-spec-page="risk-small-coin-monitor">
+      <div class="spec-card">
+        <strong>小币种风控说明</strong>
+        <em>运营说明</em>
+        <ol>
+          <li>本页规则触发条件仅保留两项：`持仓金额大于等于` 与 `输入不在统计列表的币对`。</li>
+          <li>排除币对仅支持单个合约币对格式录入，示例 `BTC/USDT`，添加后可在下方列表逐条删除。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="spec-page" data-spec-page="risk-order-brush-monitor">
+      <div class="spec-card">
+        <strong>打单风控说明</strong>
+        <em>运营说明</em>
+        <ol>
+          <li>本页用于识别同一uid在同一仓位内频繁加仓减仓，且24小时胜率较高的行为。</li>
+          <li>规则配置核心项为 `同一仓位内加仓减仓操作次数大于等于` 与 `24小时内胜率大于等于`。</li>
         </ol>
       </div>
     </div>
@@ -8149,6 +9087,7 @@
     const passwordConfigOpeners = Array.from(document.querySelectorAll('.js-open-password-config'));
     const tradePeerDetailOpeners = Array.from(document.querySelectorAll('.js-open-trade-peer-detail'));
     const configToggleButtons = Array.from(document.querySelectorAll('.js-toggle-config'));
+    const blacklistEntryEditorButtons = Array.from(document.querySelectorAll('.js-open-blacklist-entry-editor.js-toggle-config'));
     const batchRegisterRuleModal = document.getElementById('batch-register-rule-modal');
     const riskGlobalLimitModal = document.getElementById('risk-global-limit-modal');
     const riskGlobalLimitTitle = document.getElementById('risk-global-limit-title');
@@ -8205,6 +9144,10 @@
     const passwordConfigSearch = document.getElementById('password-config-search');
     const passwordConfigUserList = document.getElementById('password-config-user-list');
     const passwordConfigUsersHidden = document.getElementById('password-config-users-hidden');
+    const riskSmallCoinSymbolInput = document.getElementById('risk-small-coin-symbol-input');
+    const riskSmallCoinSymbolAdd = document.getElementById('risk-small-coin-symbol-add');
+    const riskSmallCoinSymbolList = document.getElementById('risk-small-coin-symbol-list');
+    const riskSmallCoinSymbolsHidden = document.getElementById('risk-small-coin-symbols-hidden');
     const tradePeerDetailUser = document.getElementById('trade-peer-detail-user');
     const tradePeerDetailUid = document.getElementById('trade-peer-detail-uid');
     const tradePeerDetailCounterparty = document.getElementById('trade-peer-detail-counterparty');
@@ -8220,13 +9163,14 @@
       granularity: 'day',
       rulesBackPage: 'monitor',
       orderHistoryBackPage: 'monitor',
-      riskGlobalLimitSource: '合约可疑用户',
+      riskGlobalLimitSource: '高盈利高胜率用户',
       autoJoinRulesSource: '可疑用户',
       navOpenGroups: {
         suspicious: true,
         blacklist: false,
         whitelist: false,
-        risk: false
+        'pre-warning': false,
+        'post-alert': false
       }
     };
     let permissionContext = { mode: 'record', source: '处理记录', target: '当前处理记录' };
@@ -8242,6 +9186,14 @@
 
     function uniqueList(items) {
       return Array.from(new Set((items || []).map(item => String(item || '').trim()).filter(Boolean)));
+    }
+
+    function normalizeContractSymbol(value) {
+      return String(value || '').trim().toUpperCase();
+    }
+
+    function isValidContractSymbol(value) {
+      return /^[A-Z0-9]+\/[A-Z0-9]+$/.test(normalizeContractSymbol(value));
     }
 
     function getWhitelistProtectedUsers() {
@@ -8291,12 +9243,13 @@
       'rules': '可疑用户限制规则',
       'limit': '黑名单合约下单与强平规则配置',
       'blacklist-monitor': '黑名单用户',
+      'blacklist-liquidation-history': '黑名单强平仓列表',
       'blacklist-add': '添加黑名单',
       'blacklist-ip': 'IP黑名单',
       'blacklist-device': '设备黑名单',
       'blacklist-withdraw': '提币地址黑名单',
       'blacklist-password': '密码黑名单',
-      'blacklist-phone': '手机号码黑名单',
+      'blacklist-phone': '邮箱黑名单',
       'market-history': '市价历史订单',
       'limit-history': '限价历史订单',
       'blacklist-market-history': '市价历史订单',
@@ -8309,17 +9262,24 @@
       'risk-device-whitelist': '设备白名单',
       'risk-withdraw-whitelist': '提币地址白名单',
       'risk-password-whitelist': '密码白名单',
-      'risk-contract-suspicious-monitor': '合约可疑用户',
+      'risk-contract-suspicious-monitor': '高盈利高胜率用户',
       'risk-short-hold': '高频短时持仓监控',
       'risk-same-second-open': '同秒开仓监控',
       'risk-withdraw-address-monitor': '同提币地址监控',
+      'risk-deposit-address-monitor': '同充值地址监控',
+      'risk-internal-transfer-monitor': '同uid内部划转监控',
+      'risk-large-position-monitor': '大额持仓监控',
+      'risk-large-transfer-monitor': '大额出入金监控',
+      'risk-cumulative-withdraw-monitor': '累计出金超过入金监控',
       'risk-wool-monitor': '羊毛党监控',
       'risk-abnormal-deposit-monitor': '异常充值监控',
       'risk-password-monitor': '用户同密码',
       'risk-password-detail': '同密码详情',
       'risk-password-config': '同密码用户配置',
-      'risk-trade-peer-monitor': '交易同用户风控',
-      'risk-trade-peer-detail': '交易同用户详情',
+      'risk-trade-peer-monitor': '对敲交易监控',
+      'risk-trade-peer-detail': '对敲交易详情',
+      'risk-small-coin-monitor': '小币种风控',
+      'risk-order-brush-monitor': '打单风控',
       'risk-ip-whitelist': 'IP白名单',
       'risk-handle-record': '处理记录',
       'risk-handle-record-detail': '处理记录详情'
@@ -8327,17 +9287,25 @@
     const userConfigNames = {
       '异常登录监控': '异常登录配置',
       '批量注册监控': '批量注册配置',
-      '合约可疑用户': '相关操作配置',
+      '高盈利高胜率用户': '相关操作配置',
       '高频短时持仓监控': '高频短时持仓配置',
       '同秒开仓监控': '同秒开仓配置',
       '同提币地址监控': '同提币地址配置',
+      '同充值地址监控': '同充值地址配置',
+      '同uid内部划转监控': '同uid内部划转配置',
+      '大额持仓监控': '大额持仓配置',
+      '大额出入金监控': '大额出入金配置',
+      '累计出金超过入金监控': '累计出金超过入金配置',
       '羊毛党监控': '羊毛党配置',
       '异常充值监控': '相关操作配置',
-      '交易同用户风控': '交易同用户风控配置',
+      '对敲交易监控': '对敲交易配置',
+      '小币种风控': '小币种风控配置',
+      '打单风控': '打单风控配置',
       'IP黑名单': '用户控制配置',
       '设备黑名单': '用户控制配置',
       '提币地址黑名单': '用户控制配置',
-      '密码黑名单': '用户控制配置'
+      '密码黑名单': '用户控制配置',
+      '邮箱黑名单': '用户控制配置'
     };
     const overviewMetrics = {
       'monitor': [
@@ -8642,6 +9610,10 @@
         hierarchy: ['一级：黑名单', '二级：黑名单用户', '三级：限价历史订单', '弹窗：无'],
         modals: ['当前页无独立弹窗，字段与可疑用户限价历史订单保持同类口径。']
       },
+      'blacklist-liquidation-history': {
+        hierarchy: ['一级：黑名单', '二级：黑名单用户', '三级：黑名单强平仓列表', '弹窗：无'],
+        modals: ['当前页无独立弹窗，点击对应订单详情仅做跳转演示。']
+      },
       'whitelist-monitor': {
         hierarchy: ['一级：白名单', '二级：白名单用户', '三级：无', '弹窗：添加白名单用户、触发事件'],
         modals: ['添加白名单用户弹窗：字段包含用户UID集合与转入原因，居中展示。', '触发事件弹窗：展示触发时间、相关用户UID、触发原因，一次一条。']
@@ -8715,12 +9687,12 @@
         modals: ['当前页无独立弹窗，配置直接在三级页面完成。']
       },
       'risk-trade-peer-monitor': {
-        hierarchy: ['一级：风控', '二级：交易同用户风控', '三级：查看详情', '弹窗：规则配置、监控状态配置、交易同用户风控配置'],
-        modals: ['规则配置弹窗：按当前页面动态加载统计时间范围、交易次数、最小总金额与统计类型|次数为整数；金额字段小数点位数跟随平台后端返回，页面截取处理，均需明确单位与比较符号|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '交易同用户风控配置弹窗：当前用户UID与关联交易对手用户为只读输入框默认带出|是否关联交易对手为 是/否 单选，选择 是 时处理对象切换为 当前用户 + 交易对手集合|风控操作至少勾选 1 项后方可确认。']
+        hierarchy: ['一级：风控', '二级：对敲交易监控', '三级：查看详情', '弹窗：规则配置、监控状态配置、对敲交易配置'],
+        modals: ['规则配置弹窗：按当前页面动态加载统计时间范围、交易次数、时间段内累计交易金额与统计类型|统计时间为事件驱动的独立动态窗口机制，触发后生成 Monitor ID，并以 开始时间 + 配置时间 作为结束时间；触发不中断，期满方闭环，最终状态结算为 已触发 或 已结束|次数为整数；金额字段按页面单位展示并明确比较符号|确认保存前需填写谷歌验证码。', '监控状态配置弹窗：来源页面与当前状态为只读输入框，目标状态仅支持 开启/关闭 两个选项|确认时按当前目标状态直接保存。', '对敲交易配置弹窗：当前用户UID与关联交易对手用户为只读输入框默认带出|是否关联交易对手为 是/否 单选，选择 是 时处理对象切换为 当前用户 + 交易对手集合|风控操作至少勾选 1 项后方可确认。']
       },
       'risk-trade-peer-detail': {
-        hierarchy: ['一级：风控', '二级：交易同用户风控', '三级：查看详情', '弹窗：交易同用户风控配置'],
-        modals: ['交易同用户风控配置弹窗：当前交易用户UID与全部对手用户UID默认带出|是否关联交易对手为 是/否 单选，选择 是 时统一处理当前用户与全部对手UID集合|风控操作至少勾选 1 项后方可确认。']
+        hierarchy: ['一级：风控', '二级：对敲交易监控', '三级：查看详情', '弹窗：对敲交易配置'],
+        modals: ['对敲交易配置弹窗：当前交易用户UID与全部对手用户UID默认带出|是否关联交易对手为 是/否 单选，选择 是 时统一处理当前用户与全部对手UID集合|风控操作至少勾选 1 项后方可确认。']
       },
       'risk-handle-record': {
         hierarchy: ['一级：风控', '二级：处理记录', '三级：查看详情', '弹窗：开启权限'],
@@ -9583,6 +10555,140 @@
         ipRowId: 'blacklist-ip-input-row',
         countryRowId: 'blacklist-ip-country-row'
       });
+
+      bindBlacklistInlineTargetSync('blacklist-ip-form');
+      bindBlacklistInlineTargetSync('blacklist-device-form');
+      bindBlacklistInlineTargetSync('blacklist-withdraw-form');
+      bindBlacklistInlineTargetSync('blacklist-password-form');
+      bindBlacklistInlineTargetSync('blacklist-phone-form');
+    }
+
+    function setRadioChoice(root, radioName, targetValue) {
+      if (!root || !radioName) return;
+      const normalizedTarget = (targetValue || '').replace(/\s+/g, '').trim();
+      const radios = Array.from(root.querySelectorAll(`input[type="radio"][name="${radioName}"]`));
+      const matched = radios.find(item => {
+        const labelText = item.parentElement ? item.parentElement.textContent.replace(/\s+/g, '').trim() : '';
+        const valueText = (item.value || '').replace(/\s+/g, '').trim();
+        return valueText === normalizedTarget || labelText === normalizedTarget;
+      });
+      if (!matched) return;
+      matched.checked = true;
+      matched.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    function setSelectChoice(select, targetValue) {
+      if (!select) return;
+      const normalizedTarget = (targetValue || '').replace(/\s+/g, '').trim();
+      const matchedOption = Array.from(select.options).find(option => {
+        const text = option.textContent.replace(/\s+/g, '').trim();
+        const value = (option.value || '').replace(/\s+/g, '').trim();
+        return text === normalizedTarget || value === normalizedTarget;
+      });
+      select.value = matchedOption ? matchedOption.value : (select.options[0] ? select.options[0].value : '');
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    function getSlashFirstValue(text) {
+      return (text || '').split('/').map(item => item.trim()).find(Boolean) || '';
+    }
+
+    function syncBlacklistInlineTarget(formId) {
+      const panel = document.getElementById(formId);
+      if (!panel) return;
+      const targetInput = panel.querySelector('.js-blacklist-inline-target');
+      if (!targetInput) return;
+      let value = '';
+      if (formId === 'blacklist-ip-form') {
+        const mode = panel.querySelector('input[name="ip-blacklist-mode"]:checked');
+        if (mode && mode.value === 'country') {
+          const select = panel.querySelector('#blacklist-ip-country-row select');
+          value = select && select.selectedOptions[0] ? select.selectedOptions[0].textContent.trim() : '';
+          if (value === '请选择') value = '';
+        } else {
+          value = getSlashFirstValue(panel.querySelector('textarea') ? panel.querySelector('textarea').value : '');
+        }
+      } else if (formId === 'blacklist-device-form') {
+        value = getSlashFirstValue(panel.querySelector('textarea') ? panel.querySelector('textarea').value : '');
+      } else if (formId === 'blacklist-withdraw-form') {
+        value = getSlashFirstValue(panel.querySelector('textarea') ? panel.querySelector('textarea').value : '');
+      } else if (formId === 'blacklist-password-form') {
+        value = getSlashFirstValue(panel.querySelector('textarea') ? panel.querySelector('textarea').value : '');
+      } else if (formId === 'blacklist-phone-form') {
+        const mode = panel.querySelector('input[name="phone-blacklist-mode"]:checked');
+        if (mode && mode.value === 'country') {
+          const select = panel.querySelector('#blacklist-phone-country-row select');
+          value = select && select.selectedOptions[0] ? select.selectedOptions[0].textContent.trim() : '';
+          if (value === '请选择') value = '';
+        } else {
+          value = getSlashFirstValue(panel.querySelector('textarea') ? panel.querySelector('textarea').value : '');
+        }
+      }
+      targetInput.value = value;
+    }
+
+    function bindBlacklistInlineTargetSync(formId) {
+      const panel = document.getElementById(formId);
+      if (!panel) return;
+      panel.querySelectorAll('textarea, select, input[type="radio"]').forEach(field => {
+        field.addEventListener('input', () => syncBlacklistInlineTarget(formId));
+        field.addEventListener('change', () => syncBlacklistInlineTarget(formId));
+      });
+      syncBlacklistInlineTarget(formId);
+    }
+
+    function fillBlacklistEntryEditor(trigger) {
+      if (!trigger) return;
+      const targetId = trigger.dataset.target || '';
+      const mode = trigger.dataset.entryMode === 'edit' ? 'edit' : 'create';
+      const formBlock = document.getElementById(targetId);
+      if (!formBlock) return;
+      const panel = formBlock.querySelector('.config-panel');
+      if (!panel) return;
+      const title = panel.querySelector('h2');
+      const reasonInput = panel.querySelector('input[type="text"]');
+      const textarea = panel.querySelector('textarea');
+      const remarkInput = panel.querySelector('.js-blacklist-inline-remark');
+      const actionInputs = Array.from(panel.querySelectorAll('.blacklist-inline-action'));
+      if (reasonInput) reasonInput.value = mode === 'edit' ? (trigger.dataset.reason || '') : '';
+      if (textarea) textarea.value = '';
+      if (remarkInput) remarkInput.value = '';
+      actionInputs.forEach(item => { item.checked = false; });
+      if (title) {
+        const pageTitle = pageNames[targetId.replace('-form-block', '')] || '黑名单';
+        title.textContent = mode === 'edit' ? `编辑${pageTitle}` : `添加/编辑${pageTitle}`;
+      }
+
+      if (targetId === 'blacklist-ip-form-block') {
+        setRadioChoice(panel, 'ip-blacklist-mode', mode === 'edit' ? (trigger.dataset.ipMode || 'ip') : 'ip');
+        setSelectChoice(panel.querySelector('#blacklist-ip-country-row select'), mode === 'edit' ? (trigger.dataset.countryValue || '请选择') : '请选择');
+        if (textarea) textarea.value = mode === 'edit' ? (trigger.dataset.ipValue || '') : '';
+      } else if (targetId === 'blacklist-device-form-block') {
+        setRadioChoice(panel, 'device-blacklist-type', mode === 'edit' ? (trigger.dataset.deviceType || 'WEB') : 'WEB');
+        if (textarea) textarea.value = mode === 'edit' ? (trigger.dataset.deviceValue || '') : '';
+      } else if (targetId === 'blacklist-withdraw-form-block') {
+        if (textarea) textarea.value = mode === 'edit' ? (trigger.dataset.withdrawValue || '') : '';
+      } else if (targetId === 'blacklist-password-form-block') {
+        setRadioChoice(panel, 'password-blacklist-type', mode === 'edit' ? (trigger.dataset.passwordType || '登录密码') : '登录密码');
+        if (textarea) textarea.value = mode === 'edit' ? (trigger.dataset.passwordValue || '') : '';
+      } else if (targetId === 'blacklist-phone-form-block') {
+        setRadioChoice(panel, 'phone-blacklist-mode', mode === 'edit' ? (trigger.dataset.phoneMode || 'phone') : 'phone');
+        setSelectChoice(panel.querySelector('#blacklist-phone-country-row select'), mode === 'edit' ? (trigger.dataset.countryValue || '请选择') : '请选择');
+        if (textarea) textarea.value = mode === 'edit' ? (trigger.dataset.phoneValue || '') : '';
+      }
+      syncBlacklistInlineTarget(panel.id);
+    }
+
+    function openBlacklistEntryEditor(trigger) {
+      if (!trigger) return;
+      const targetId = trigger.dataset.target || '';
+      const modal = document.getElementById(targetId);
+      if (!modal) return;
+      fillBlacklistEntryEditor(trigger);
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      const button = document.querySelector(`.js-toggle-config[data-target="${targetId}"]`);
+      if (button) syncConfigToggle(button);
     }
 
     function getGroupPages(group) {
@@ -9716,6 +10822,14 @@
       });
     });
 
+    blacklistEntryEditorButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.target || '');
+        if (!target || target.hidden) return;
+        fillBlacklistEntryEditor(button);
+      });
+    });
+
     function bindClick(id, handler) {
       const el = document.getElementById(id);
       if (el) el.addEventListener('click', handler);
@@ -9779,7 +10893,7 @@
     }
 
     function fillRiskGlobalLimitModal(source) {
-      const currentSource = source || '合约可疑用户';
+      const currentSource = source || '高盈利高胜率用户';
       state.riskGlobalLimitSource = currentSource;
       if (riskGlobalLimitTitle) riskGlobalLimitTitle.textContent = `${currentSource}限制规则`;
       if (riskGlobalLimitDesc) riskGlobalLimitDesc.textContent = `用于维护${currentSource}的限制规则，采用弹窗方式配置限价延迟与市价滑点两类限制。`;
@@ -9957,13 +11071,13 @@
       const source = trigger.dataset.configSource || (pageNames[state.activePage] || '当前页面');
       const configName = userConfigNames[source] || `${source}配置`;
       const isBatchRegister = source === '批量注册监控';
-      const isContractSuspicious = source === '合约可疑用户';
+      const isContractSuspicious = source === '高盈利高胜率用户';
       const isShortHold = source === '高频短时持仓监控';
       const isWoolMonitor = source === '羊毛党监控';
       const isAbnormalDeposit = source === '异常充值监控';
-      const isTradePeerMonitor = source === '交易同用户风控';
+      const isTradePeerMonitor = source === '对敲交易监控';
       const isWithdrawAddressMonitor = source === '同提币地址监控';
-      const isBlacklistManage = ['IP黑名单', '设备黑名单', '提币地址黑名单', '密码黑名单'].includes(source);
+      const isBlacklistManage = ['IP黑名单', '设备黑名单', '提币地址黑名单', '密码黑名单', '邮箱黑名单'].includes(source);
       const hideRelationBlock = isBatchRegister || isContractSuspicious || isShortHold || isWoolMonitor || isAbnormalDeposit || isBlacklistManage;
       const relatedIpUsers = trigger.dataset.relatedIpUsers || uid;
       const relatedDeviceUsers = trigger.dataset.relatedDeviceUsers || uid;
@@ -9978,7 +11092,7 @@
       if (sameUserConfigDesc) sameUserConfigDesc.textContent = isBatchRegister
         ? `用于将当前批量注册用户及其关联用户做统一风控处理。当前来源页面为${source}，可按同IP、同设备、同邮箱后缀三类维度选择关联用户范围，并对过滤白名单后的关联UID集合做删除与处理。`
         : isContractSuspicious
-          ? `用于对当前合约可疑用户执行相关风控处理。当前来源页面为${source}，本配置页仅针对当前用户生效。`
+          ? `用于对当前高盈利高胜率用户执行相关风控处理。当前来源页面为${source}，本配置页仅针对当前用户生效。`
         : isBlacklistManage
           ? `用于对当前黑名单对象执行单条用户控制处理。当前来源页面为${source}，本配置页仅针对当前对象生效。`
         : isShortHold
@@ -9986,9 +11100,9 @@
           : isAbnormalDeposit
             ? `用于对当前异常充值命中用户执行相关风控处理。当前来源页面为${source}，本配置页仅针对当前用户生效。`
           : isTradePeerMonitor
-            ? `用于对当前交易同用户风控记录执行统一处理。当前来源页面为${source}，可选择是否将交易对手用户一并纳入处理。`
+            ? `用于对当前对敲交易监控记录执行统一处理。当前来源页面为${source}，可选择是否将交易对手用户一并纳入处理。`
           : isWithdrawAddressMonitor
-            ? `用于将当前用户或关联同提币地址用户做统一风控处理。当前来源页面为${source}，勾选关联同提币地址用户后，当前页面监控用户内容按关联用户集合进行替换展示与处理。`
+            ? `用于将当前用户或关联同地址用户做统一风控处理。当前来源页面为${source}，勾选关联同地址用户后，当前页面监控用户内容按关联用户集合进行替换展示与处理。`
           : isWoolMonitor
             ? `用于对当前羊毛党监控用户执行风控处理。当前来源页面为${source}，可按下级范围决定是否将其下级账户一并纳入处理。`
           : `用于将当前用户或关联同秒开仓用户做统一风控处理。当前来源页面为${source}，弹窗名称随页面展示为${configName}。勾选关联同秒开仓用户后，当前页面监控用户内容按关联用户集合进行替换展示与处理。`;
@@ -10199,7 +11313,7 @@
             <td>${counterpartyUid || ''}</td>
             <td>${amount || ''} USDT</td>
             <td>${time || ''}</td>
-            <td><a href="#" class="action-link js-open-user-config" data-user-uid="${trigger.dataset.tradePeerUid || ''}" data-related-users="${trigger.dataset.tradePeerCounterparty || ''}" data-relation-default="${relationDefault}" data-config-source="交易同用户风控">交易同用户风控配置</a></td>
+            <td><a href="#" class="action-link js-open-user-config" data-user-uid="${trigger.dataset.tradePeerUid || ''}" data-related-users="${trigger.dataset.tradePeerCounterparty || ''}" data-relation-default="${relationDefault}" data-config-source="对敲交易监控">对敲交易配置</a></td>
           </tr>
         `;
       }).join('');
@@ -10238,6 +11352,37 @@
           <button type="button" class="js-remove-password-user" data-uid="${uid}" aria-label="删除 ${uid}">x</button>
         </span>
       `).join('');
+    }
+
+    function renderRiskSmallCoinSymbols() {
+      if (!riskSmallCoinSymbolsHidden || !riskSmallCoinSymbolList) return;
+      const symbols = uniqueList((riskSmallCoinSymbolsHidden.value || '').split(',').map(item => normalizeContractSymbol(item)));
+      riskSmallCoinSymbolsHidden.value = symbols.join(',');
+      if (!symbols.length) {
+        riskSmallCoinSymbolList.innerHTML = '<span class="tag-empty">暂无排除币对，请输入单个合约币对后点击“添加币对”。</span>';
+        return;
+      }
+      riskSmallCoinSymbolList.innerHTML = symbols.map(symbol => `
+        <span class="tag-item">
+          <span>${symbol}</span>
+          <button type="button" class="js-remove-small-coin-symbol" data-symbol="${symbol}" aria-label="删除 ${symbol}">x</button>
+        </span>
+      `).join('');
+    }
+
+    function addRiskSmallCoinSymbol() {
+      if (!riskSmallCoinSymbolInput || !riskSmallCoinSymbolsHidden) return;
+      const symbol = normalizeContractSymbol(riskSmallCoinSymbolInput.value);
+      if (!symbol) return;
+      if (!isValidContractSymbol(symbol)) {
+        alert('请输入单个合约币对，格式如 BTC/USDT');
+        return;
+      }
+      const symbols = uniqueList((riskSmallCoinSymbolsHidden.value || '').split(',').map(item => normalizeContractSymbol(item)));
+      if (!symbols.includes(symbol)) symbols.push(symbol);
+      riskSmallCoinSymbolsHidden.value = symbols.join(',');
+      riskSmallCoinSymbolInput.value = '';
+      renderRiskSmallCoinSymbols();
     }
 
     function fillPasswordConfig(trigger) {
@@ -10312,7 +11457,7 @@
       activate('rules');
     });
     bindClick('go-risk-global-limit', () => {
-      fillRiskGlobalLimitModal('合约可疑用户');
+      fillRiskGlobalLimitModal('高盈利高胜率用户');
       setRiskGlobalLimitModalOpen(true);
     });
     bindClick('go-monitor-market-history', () => {
@@ -10375,6 +11520,7 @@
     bindClick('back-from-limit-history', () => activate(state.orderHistoryBackPage || 'monitor'));
     bindClick('back-from-blacklist-market-history', () => activate('blacklist-monitor'));
     bindClick('back-from-blacklist-limit-history', () => activate('blacklist-monitor'));
+    bindClick('back-from-blacklist-liquidation-history', () => activate('blacklist-monitor'));
     bindClick('back-from-whitelist-add', () => activate('whitelist-monitor'));
     bindClick('whitelist-cancel', () => activate('whitelist-monitor'));
     bindClick('whitelist-confirm', () => alert('白名单添加成功'));
@@ -10387,7 +11533,7 @@
         return;
       }
       setRiskGlobalLimitModalOpen(false);
-      alert(`${state.riskGlobalLimitSource || '合约可疑用户'}限制规则已保存`);
+      alert(`${state.riskGlobalLimitSource || '高盈利高胜率用户'}限制规则已保存`);
     });
     bindClick('auto-join-rules-close', () => setAutoJoinRulesModalOpen(false));
     bindClick('auto-join-rules-cancel', () => setAutoJoinRulesModalOpen(false));
@@ -10549,6 +11695,32 @@
       });
     }
 
+    if (riskSmallCoinSymbolAdd) {
+      riskSmallCoinSymbolAdd.addEventListener('click', () => {
+        addRiskSmallCoinSymbol();
+      });
+    }
+
+    if (riskSmallCoinSymbolInput) {
+      riskSmallCoinSymbolInput.addEventListener('keydown', event => {
+        if (event.key !== 'Enter') return;
+        event.preventDefault();
+        addRiskSmallCoinSymbol();
+      });
+    }
+
+    if (riskSmallCoinSymbolList && riskSmallCoinSymbolsHidden) {
+      riskSmallCoinSymbolList.addEventListener('click', event => {
+        const target = event.target.closest('.js-remove-small-coin-symbol');
+        if (!target) return;
+        const removedSymbol = normalizeContractSymbol(target.dataset.symbol || '');
+        const symbols = uniqueList((riskSmallCoinSymbolsHidden.value || '').split(',').map(item => normalizeContractSymbol(item)))
+          .filter(symbol => symbol !== removedSymbol);
+        riskSmallCoinSymbolsHidden.value = symbols.join(',');
+        renderRiskSmallCoinSymbols();
+      });
+    }
+
     if (manualAdlModal) {
       manualAdlModal.addEventListener('click', event => {
         if (event.target === manualAdlModal) setManualAdlOpen(false);
@@ -10638,6 +11810,12 @@
     });
 
     document.addEventListener('click', event => {
+      const blacklistEditorTrigger = event.target.closest('a.js-open-blacklist-entry-editor');
+      if (blacklistEditorTrigger) {
+        event.preventDefault();
+        openBlacklistEntryEditor(blacklistEditorTrigger);
+        return;
+      }
       const blacklistAction = event.target.closest('.action-link, .js-batch-risk-action');
       if (blacklistAction) {
         const actionText = blacklistAction.textContent.replace(/\s+/g, ' ').trim();
@@ -10722,7 +11900,7 @@
       const source = sameUserConfigModal ? (sameUserConfigModal.dataset.source || '') : '';
       const isBatchRegister = source === '批量注册监控';
       const isWoolMonitor = source === '羊毛党监控';
-      const isTradePeerMonitor = source === '交易同用户风控';
+      const isTradePeerMonitor = source === '对敲交易监控';
       const isWithdrawAddressMonitor = source === '同提币地址监控';
       if (!uid) {
         alert('请输入当前用户UID');
@@ -10989,6 +12167,7 @@
     ensureModalSpecTriggers();
     ensureInlineModalSpecTriggers();
     ensureInlineEntryModeToggles();
+    renderRiskSmallCoinSymbols();
     renderOverview();
     setSpecCollapsed(true);
     activate('monitor');
